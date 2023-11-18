@@ -51,16 +51,14 @@ export class LoginComponent {
     onSubmit() {
         // TODO: уже лучше, как мне кажется, ошибка появляется после подписки на сервис, нужно проследить весь путь
         this.authService.login({ ...this.form.value }).subscribe({
-            next: (_response) => {
+            next: () => {
+                //     toast добро пожаловать ... и редирект на страницу chats
+                return this.router.navigate(["chats"]);
             },
             // Обрабатываем полученные из service ошибки и выводим их
             error: (error) => {
                 console.log(error);
                 this.errors = [`${error.error.message}`];
-            },
-            complete: () => {
-                //     toast добро пожаловать ... и редирект на страницу chats
-                this.router.navigate(["chats"]);
             },
         });
     }

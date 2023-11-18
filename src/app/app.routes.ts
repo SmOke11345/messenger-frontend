@@ -1,9 +1,8 @@
-import { RouterModule, Routes } from "@angular/router";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { RegisterComponent } from "./pages/register/register.component";
 import { LoginComponent } from "./pages/login/login.component";
-import { AuthGuardChats } from "./guards/auth.guard";
+import { AuthGuard } from "./guards/auth.guard";
 import { NgModule } from "@angular/core";
-import { GuardsModule } from "./guards/guards.module";
 import { AppComponent } from "./app.component";
 import { PathEnum } from "./models/Enums/PathEnum";
 import { HomeComponent } from "./pages/home/home.component";
@@ -38,7 +37,7 @@ export const routes: Routes = [
                         (m) => m.ChatsComponent,
                     ),
                 // Доступ получает только авторизированный пользователь
-                canActivate: [AuthGuardChats],
+                canActivate: [AuthGuard],
                 children: [
                     {
                         path: PathEnum.PATH_CHATS,
@@ -59,8 +58,10 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes), GuardsModule],
     exports: [RouterModule],
+    imports: [RouterModule.forRoot(routes,
+        // Для загрузки в фоновом режиме всех асинхронных модулей
+        { preloadingStrategy: PreloadAllModules })],
 })
 export class AppRoutingModule {
 }

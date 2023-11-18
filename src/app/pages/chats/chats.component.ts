@@ -18,7 +18,7 @@ export class ChatsComponent {
     isChatsPath: boolean = false;
 
     constructor(private router: Router) {
-        // Подписываемся на события роутов, когда путь вклучает нужное нам значение меняем значение isChatsPath
+        // Подписываемся на события роутов, когда путь включает нужное нам значение меняем значение isChatsPath
         this.router.events.subscribe((event) => {
             if (event instanceof RouterEvent) {
                 this.isChatsPath = event.url === "/chats";

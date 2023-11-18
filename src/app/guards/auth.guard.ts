@@ -1,23 +1,23 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { Inject, Injectable } from "@angular/core";
+import { CanActivate, Router } from "@angular/router";
 import { AuthenticationService } from "../service/authentication.service";
-import { Observable } from "rxjs";
 
-@Injectable()
-export class AuthGuardChats implements CanActivate {
+@Injectable({
+    providedIn: "root",
+})
+export class AuthGuard implements CanActivate {
     // TODO: Доделать чтобы пользователь мог получить доступ только после авторизации
     constructor(
-        private authService: AuthenticationService,
+        @Inject(AuthenticationService) private authService: AuthenticationService,
         private router: Router,
     ) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    async canActivate() {
         if (this.authService.isAuth) {
             return true;
         } else {
-            this.router.navigate(["/login"]);
-            return false;
+            return await this.router.navigate(["/login"]);
         }
     }
 }

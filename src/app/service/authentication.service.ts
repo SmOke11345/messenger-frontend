@@ -2,10 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { catchError, Observable, tap, throwError } from "rxjs";
 import { Injectable } from "@angular/core";
 import { User } from "../models/UserTypes";
+import { UrlEnums } from "../models/Enums/UrlEnums";
 
-@Injectable({
-    providedIn: "root",
-})
+@Injectable()
 export class AuthenticationService {
     isAuth: boolean = false;
 
@@ -18,7 +17,7 @@ export class AuthenticationService {
      */
     register(user: any): Observable<User> {
         return this.http
-            .post<User>("http://localhost:3000/api/auth/register", {
+            .post<User>(UrlEnums.URL_REGISTER, {
                 ...user,
             })
             .pipe(
@@ -31,7 +30,7 @@ export class AuthenticationService {
 
     login(user: any) {
         return this.http
-            .post("http://localhost:3000/api/auth/login", user)
+            .post(UrlEnums.URL_LOGIN, user)
             .pipe(
                 tap(() => {
                     this.isAuth = true;

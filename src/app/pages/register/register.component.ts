@@ -1,18 +1,28 @@
 import { Component } from "@angular/core";
-import { CommonModule } from "@angular/common";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../service/authentication.service";
-import { HttpClientModule } from "@angular/common/http";
 import { UploadImgService } from "../../service/upload-img.service";
 import { Router, RouterLink } from "@angular/router";
+import { CommonModule, NgForOf, NgIf } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
 
 @Component({
     selector: "messenger-register",
     standalone: true,
-    providers: [AuthenticationService, UploadImgService],
-    imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterLink],
     templateUrl: "./register.component.html",
     styleUrls: ["./register.component.scss"],
+    providers: [
+        AuthenticationService,
+        UploadImgService,
+    ],
+    imports: [
+        HttpClientModule,
+        CommonModule,
+        ReactiveFormsModule,
+        NgIf,
+        NgForOf,
+        RouterLink,
+    ],
 })
 export class RegisterComponent {
     // Используется только для вывода изображния

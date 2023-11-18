@@ -3,9 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { AuthenticationService } from "../service/authentication.service";
 import { Observable } from "rxjs";
 
-@Injectable({
-    providedIn: "root",
-})
+@Injectable()
 export class AuthGuardChats implements CanActivate {
     // TODO: Доделать чтобы пользователь мог получить доступ только после авторизации
     constructor(

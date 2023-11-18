@@ -1,22 +1,23 @@
 import { Component } from "@angular/core";
-import { CommonModule } from "@angular/common";
 import { Router, RouterLink } from "@angular/router";
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { AuthenticationService } from "../../service/authentication.service";
+import { CommonModule, NgForOf, NgIf } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 
 @Component({
     selector: "messenger-login",
     standalone: true,
+    templateUrl: "./login.component.html",
     providers: [AuthenticationService],
     imports: [
-        CommonModule,
-        RouterLink,
-        FormsModule,
-        ReactiveFormsModule,
         HttpClientModule,
+        CommonModule,
+        ReactiveFormsModule,
+        NgIf,
+        NgForOf,
+        RouterLink,
     ],
-    templateUrl: "./login.component.html",
 })
 export class LoginComponent {
     errors: string[] = [];
@@ -27,7 +28,7 @@ export class LoginComponent {
     form: FormGroup;
 
     constructor(
-        public authService: AuthenticationService,
+        private authService: AuthenticationService,
         private router: Router,
     ) {
         this.form = new FormGroup({
@@ -48,8 +49,9 @@ export class LoginComponent {
     // TODO: установить token в заголовок Bearer , токен устанавливается только тогда когда нужно получить доступ к какой либо странице
 
     onSubmit() {
+        // TODO: уже лучше, как мне кажется, ошибка появляется после подписки на сервис, нужно проследить весь путь
         this.authService.login({ ...this.form.value }).subscribe({
-            next: (response) => {
+            next: (_response) => {
             },
             // Обрабатываем полученные из service ошибки и выводим их
             error: (error) => {

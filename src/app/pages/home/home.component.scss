@@ -1,0 +1,35 @@
+@import '../../app.component';
+
+.home {
+
+	.wrapper_content:last-child {
+		display: grid;
+		justify-items: center;
+		gap: 20px;
+		width: 400px;
+		margin-left: 20px;
+	}
+
+	&__title {
+		text-align: center;
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.container {
+		width: 100%;
+
+		.wrapper {
+			flex-direction: column;
+		}
+
+		.wrapper_content:last-child {
+			width: 100%;
+		}
+
+		.home__title {
+			margin-top: 40px;
+		}
+
+	}
+}

@@ -1,0 +1,47 @@
+@import "../../app.component";
+
+.register {
+    // TODO: сделать какой либо фон, если дизайн будет скушный
+    //background: url("../../../assets/img/background.jpg") no-repeat center
+    //    center;
+    //background-size: cover;
+
+    .form__top {
+        display: flex;
+        justify-content: center;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    .wrap {
+        background-color: $white;
+        border-radius: 50px;
+        width: 100px;
+        height: 100px;
+        @extend %wrapper;
+        justify-content: center;
+        position: relative;
+
+        label[for="file"],
+        .remove {
+            cursor: pointer;
+            position: absolute;
+        }
+
+        label[for="file"] {
+            bottom: 0;
+            right: 0;
+        }
+
+        .remove {
+            top: 0;
+            left: 0;
+        }
+
+        .img_file img {
+            border-radius: 50px;
+        }
+    }
+}

@@ -1,11 +1,12 @@
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { RegisterComponent } from "./pages/register/register.component";
 import { LoginComponent } from "./pages/login/login.component";
-import { AuthGuard } from "./guards/auth.guard";
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { PathEnum } from "./models/Enums/PathEnum";
 import { HomeComponent } from "./pages/home/home.component";
+import { AuthGuard } from "./pages/guards/auth.guard";
+import { AuthService } from "./service/auth.service";
 
 export const routes: Routes = [
     {
@@ -37,10 +38,12 @@ export const routes: Routes = [
                         (m) => m.ChatsComponent,
                     ),
                 // Доступ получает только авторизированный пользователь
+                // TODO: Доделать получение доступа, только после авторизации пользователя
                 canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 children: [
                     {
-                        path: PathEnum.PATH_CHATS,
+                        path: PathEnum.PATH_FRIENDS,
                         // Чтобы страница не загружалась сразу
                         loadComponent: () =>
                             import("./pages/friends/friends.component").then(
@@ -51,6 +54,7 @@ export const routes: Routes = [
             },
         ],
     },
+
     {
         path: "**",
         redirectTo: PathEnum.PATH_HOME,
@@ -58,10 +62,8 @@ export const routes: Routes = [
 ];
 
 @NgModule({
+    providers: [AuthGuard, AuthService],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
-    imports: [RouterModule.forRoot(routes,
-        // Для загрузки в фоновом режиме всех асинхронных модулей
-        { preloadingStrategy: PreloadAllModules })],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { AuthenticationService } from "../../service/authentication.service";
+import { AuthService } from "../../service/auth.service";
 import { CommonModule, NgForOf, NgIf } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 
@@ -9,7 +9,7 @@ import { HttpClientModule } from "@angular/common/http";
     selector: "messenger-login",
     standalone: true,
     templateUrl: "./login.component.html",
-    providers: [AuthenticationService],
+    providers: [AuthService],
     imports: [
         HttpClientModule,
         CommonModule,
@@ -27,10 +27,7 @@ export class LoginComponent {
 
     form: FormGroup;
 
-    constructor(
-        private authService: AuthenticationService,
-        private router: Router,
-    ) {
+    constructor(private authService: AuthService, private router: Router) {
         this.form = new FormGroup({
             email: new FormControl(""),
             password: new FormControl(""),
@@ -46,14 +43,15 @@ export class LoginComponent {
         }
     }
 
-    // TODO: установить token в заголовок Bearer , токен устанавливается только тогда когда нужно получить доступ к какой либо странице
+    // TODO: токен устанавливается только тогда когда нужно получить доступ к какой либо странице
 
     onSubmit() {
         // TODO: уже лучше, как мне кажется, ошибка появляется после подписки на сервис, нужно проследить весь путь
         this.authService.login({ ...this.form.value }).subscribe({
-            next: () => {
-                //     toast добро пожаловать ... и редирект на страницу chats
-                return this.router.navigate(["chats"]);
+            next: (response) => {
+                localStorage.setItem("access_token", response.access_token);
+                // toast добро пожаловать ... и редирект на страницу chats
+                this.router.navigate(["/chats"]);
             },
             // Обрабатываем полученные из service ошибки и выводим их
             error: (error) => {

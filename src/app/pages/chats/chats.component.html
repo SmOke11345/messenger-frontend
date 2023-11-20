@@ -1,4 +1,7 @@
-<div *ngIf="isChatsPath">Hello chats path</div>
+<div *ngIf="isChatsPath">
+    Hello chats path
+    <button (click)="click()">hello</button>
+</div>
 <div *ngIf="!isChatsPath">
     <router-outlet></router-outlet>
 </div>

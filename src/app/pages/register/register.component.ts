@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { AuthenticationService } from "../../service/authentication.service";
+import { AuthService } from "../../service/auth.service";
 import { UploadImgService } from "../../service/upload-img.service";
 import { Router, RouterLink } from "@angular/router";
 import { CommonModule, NgForOf, NgIf } from "@angular/common";
@@ -12,7 +12,7 @@ import { HttpClientModule } from "@angular/common/http";
     templateUrl: "./register.component.html",
     styleUrls: ["./register.component.scss"],
     providers: [
-        AuthenticationService,
+        AuthService,
         UploadImgService,
     ],
     imports: [
@@ -25,7 +25,7 @@ import { HttpClientModule } from "@angular/common/http";
     ],
 })
 export class RegisterComponent {
-    // Используется только для вывода изображния
+    // Используется только для вывода изображений
     imgAcc: string = "";
 
     show: boolean = false;
@@ -37,7 +37,7 @@ export class RegisterComponent {
     selectedFile: File;
 
     constructor(
-        private authService: AuthenticationService,
+        private authService: AuthService,
         private uploadService: UploadImgService,
         private router: Router,
     ) {
@@ -126,7 +126,7 @@ export class RegisterComponent {
                 complete: () => {
                     this.pushAvatar();
                     this.router.navigate(["/login"]);
-                    //     toast Удачная регистрация и переход на другой экран  , набудующее
+                    //     toast Удачная регистрация и переход на другой экран, набудующее
                 },
             });
     }

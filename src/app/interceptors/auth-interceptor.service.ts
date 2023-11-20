@@ -1,0 +1,52 @@
+import {
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest,
+} from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+
+/**
+ *TODO: Нужно сделать чтобы каждый переход ссылался на backend запрос для идентификации пользователя по токену,
+ * К примеру при нажатии на кнопку перехода на другой роут происходит запрос на backend, и затем, при успешной проверки пропускает пользователя
+ */
+
+@Injectable({ providedIn: "root" })
+export class AuthInterceptor implements HttpInterceptor {
+    /**
+     * Используется для обработки запросов, и активируется только когда выполняется http запрос на backend
+     * @param request
+     * @param next
+     */
+    intercept(
+        request: HttpRequest<any>,
+        next: HttpHandler,
+    ): Observable<HttpEvent<any>> {
+        console.log("Intercepted request:", request);
+
+        // Получаем токен из localStorage
+        const token = localStorage.getItem("access_token");
+
+        if (token) {
+            // Устанавливаем токен в заголовок
+            request = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        }
+
+        // Возвращаем запрос
+        return next.handle(request);
+
+        // Проверяем, что запрос работает и выполняет свои функции
+        //     .pipe(
+        //     tap((event) => {
+        //         if (event instanceof HttpResponse) {
+        //             console.log("Intercepted response:", event);
+        //         }
+        //     }),
+        // );
+    }
+}

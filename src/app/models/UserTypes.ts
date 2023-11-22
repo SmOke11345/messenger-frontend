@@ -9,4 +9,4 @@ export interface User {
 // Используется для типизации полученных данных после аутентификации пользователя
 export type LoginResponse = {
     access_token: string;
-}
+};

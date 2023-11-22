@@ -3,10 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { UrlEnums } from "../models/Enums/UrlEnums";
 
 @Injectable()
-
 export class UploadImgService {
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     /**
      * Загрузка полученного изображения в backend
@@ -15,9 +13,6 @@ export class UploadImgService {
     uploadImg(file: File) {
         const formData: FormData = new FormData();
         formData.append("file", file);
-        return this.http.post(
-            `${UrlEnums.URL_USERS}/upload`,
-            formData,
-        );
+        return this.http.post(`${UrlEnums.URL_USERS}/upload`, formData);
     }
 }

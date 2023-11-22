@@ -6,9 +6,7 @@ import { RouterLink } from "@angular/router";
     standalone: true,
     templateUrl: "./home.component.html",
     styleUrls: ["./home.component.scss"],
-    imports: [
-        RouterLink,
-    ],
+    imports: [RouterLink],
 })
 export class HomeComponent {
     img = "../../assets/img/home/Illustration.jpg";

@@ -4,4 +4,5 @@ export enum PathEnum {
     PATH_LOGIN = "login",
     PATH_CHATS = "chats",
     PATH_FRIENDS = "friends",
+    PATH_SETTINGS = "settings",
 }

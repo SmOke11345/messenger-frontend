@@ -11,7 +11,6 @@ import { Observable } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanActivate, CanActivateChild {
-    // TODO: Доделать чтобы пользователь мог получить доступ только после авторизации
     constructor(private router: Router) {}
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

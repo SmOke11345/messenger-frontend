@@ -35,6 +35,6 @@ export class AuthService {
     }
 
     getData() {
-        return this.http.get(UrlEnums.URL_USERS).subscribe({});
+        return this.http.get(UrlEnums.URL_USERS);
     }
 }

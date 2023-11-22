@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { Router, RouterOutlet } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 
@@ -10,6 +10,16 @@ import { CommonModule } from "@angular/common";
     styleUrls: ["./app.component.scss"],
     imports: [RouterOutlet, CommonModule, HttpClientModule],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = "messenger-frontend";
+
+    constructor(private router: Router) {}
+
+    // TODO: работает, только как мне кажется не там где нужно
+    ngOnInit() {
+        const token = localStorage.getItem("access_token");
+        if (token) {
+            this.router.navigate(["/chats"]);
+        }
+    }
 }

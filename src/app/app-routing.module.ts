@@ -7,7 +7,9 @@ import { PathEnum } from "./models/Enums/PathEnum";
 import { HomeComponent } from "./pages/home/home.component";
 import { AuthGuard } from "./pages/guards/auth.guard";
 import { AuthService } from "./service/auth.service";
+import { LayoutComponent } from "./pages/layout.component";
 
+// TODO: если в localStorage есть токен, то пользователь перенаправляется на страницу chats
 export const routes: Routes = [
     {
         path: "",
@@ -30,6 +32,14 @@ export const routes: Routes = [
                 path: PathEnum.PATH_LOGIN,
                 component: LoginComponent,
             },
+        ],
+    },
+    {
+        path: "",
+        component: LayoutComponent,
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        children: [
             {
                 path: PathEnum.PATH_CHATS,
                 // Чтобы страница не загружалась сразу
@@ -37,24 +47,24 @@ export const routes: Routes = [
                     import("./pages/chats/chats.component").then(
                         (m) => m.ChatsComponent,
                     ),
-                // Доступ получает только авторизированный пользователь
-                // TODO: Доделать получение доступа, только после авторизации пользователя
-                canActivate: [AuthGuard],
-                canActivateChild: [AuthGuard],
-                children: [
-                    {
-                        path: PathEnum.PATH_FRIENDS,
-                        // Чтобы страница не загружалась сразу
-                        loadComponent: () =>
-                            import("./pages/friends/friends.component").then(
-                                (m) => m.FriendsComponent,
-                            ),
-                    },
-                ],
+            },
+            {
+                path: PathEnum.PATH_FRIENDS,
+                // Чтобы страница не загружалась сразу
+                loadComponent: () =>
+                    import("./pages/friends/friends.component").then(
+                        (m) => m.FriendsComponent,
+                    ),
+            },
+            {
+                path: PathEnum.PATH_SETTINGS,
+                loadComponent: () =>
+                    import("./pages/settings/settings.component").then(
+                        (m) => m.SettingsComponent,
+                    ),
             },
         ],
     },
-
     {
         path: "**",
         redirectTo: PathEnum.PATH_HOME,

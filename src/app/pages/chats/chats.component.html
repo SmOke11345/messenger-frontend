@@ -1,8 +1,3 @@
-<div *ngIf="isChatsPath">
-    Hello chats path
-    <button (click)="click()">hello</button>
-</div>
-<div *ngIf="!isChatsPath">
-    <router-outlet></router-outlet>
-</div>
-<messenger-nav></messenger-nav>
+<!-- TODO: Сделать в path кнопку выход, которая в свою очередь удаляет из localStorage данные о пользователе, такие как access_token и может cookie если я их туда добавлю ))-->
+<div>Hello chats path</div>
+<button (click)="click()">Нажать</button>

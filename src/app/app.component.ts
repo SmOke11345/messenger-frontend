@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router, RouterOutlet } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
     selector: "app-root",
@@ -13,11 +14,12 @@ import { CommonModule } from "@angular/common";
 export class AppComponent implements OnInit {
     title = "messenger-frontend";
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private cookieService: CookieService) {}
 
     // TODO: работает, только как мне кажется не там где нужно
     ngOnInit() {
-        const token = localStorage.getItem("access_token");
+        const token = this.cookieService.check("access_token");
+        console.log(token);
         if (token) {
             this.router.navigate(["/chats"]);
         }

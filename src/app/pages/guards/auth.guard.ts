@@ -8,13 +8,14 @@ import {
     UrlTree,
 } from "@angular/router";
 import { Observable } from "rxjs";
+import { CookieService } from "ngx-cookie-service";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanActivate, CanActivateChild {
-    constructor(private router: Router) {}
+    constructor(private router: Router, private cookieService: CookieService) {}
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const token = localStorage.getItem("access_token");
+        const token = this.cookieService.check("access_token");
         if (token) {
             return true;
         }

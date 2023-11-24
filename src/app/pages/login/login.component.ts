@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Router, RouterLink } from "@angular/router";
+import { RouterLink } from "@angular/router";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "../../service/auth.service";
 import { CommonModule, NgForOf, NgIf } from "@angular/common";
@@ -27,7 +27,7 @@ export class LoginComponent {
 
     form: FormGroup;
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private authService: AuthService) {
         this.form = new FormGroup({
             email: new FormControl(""),
             password: new FormControl(""),
@@ -43,16 +43,8 @@ export class LoginComponent {
         }
     }
 
-    // TODO: токен устанавливается только тогда когда нужно получить доступ к какой либо странице
-
     onSubmit() {
         this.authService.login({ ...this.form.value }).subscribe({
-            next: (response) => {
-                localStorage.setItem("access_token", response.access_token);
-
-                // toast добро пожаловать ... и редирект на страницу chats
-                this.router.navigate(["/chats"]);
-            },
             // Обрабатываем полученные из service ошибки и выводим их
             error: (error) => {
                 console.log(error);

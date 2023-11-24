@@ -9,7 +9,6 @@ import { AuthGuard } from "./pages/guards/auth.guard";
 import { AuthService } from "./service/auth.service";
 import { LayoutComponent } from "./pages/layout.component";
 
-// TODO: если в localStorage есть токен, то пользователь перенаправляется на страницу chats
 export const routes: Routes = [
     {
         path: "",
@@ -37,7 +36,9 @@ export const routes: Routes = [
     {
         path: "",
         component: LayoutComponent,
+        // Для получения доступа к маршруту
         canActivate: [AuthGuard],
+        // И его наследников (детей)
         canActivateChild: [AuthGuard],
         children: [
             {
@@ -50,7 +51,6 @@ export const routes: Routes = [
             },
             {
                 path: PathEnum.PATH_FRIENDS,
-                // Чтобы страница не загружалась сразу
                 loadComponent: () =>
                     import("./pages/friends/friends.component").then(
                         (m) => m.FriendsComponent,

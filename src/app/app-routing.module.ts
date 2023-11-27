@@ -8,6 +8,7 @@ import { HomeComponent } from "./pages/home/home.component";
 import { AuthGuard } from "./pages/guards/auth.guard";
 import { AuthService } from "./service/auth.service";
 import { LayoutComponent } from "./pages/layout.component";
+import { UserService } from "./service/user.service";
 
 export const routes: Routes = [
     {
@@ -43,6 +44,8 @@ export const routes: Routes = [
         children: [
             {
                 path: PathEnum.PATH_CHATS,
+                // Изменение title страницы
+                title: "Chats",
                 // Чтобы страница не загружалась сразу
                 loadComponent: () =>
                     import("./pages/chats/chats.component").then(
@@ -51,6 +54,7 @@ export const routes: Routes = [
             },
             {
                 path: PathEnum.PATH_FRIENDS,
+                title: "Friends",
                 loadComponent: () =>
                     import("./pages/friends/friends.component").then(
                         (m) => m.FriendsComponent,
@@ -58,6 +62,7 @@ export const routes: Routes = [
             },
             {
                 path: PathEnum.PATH_SETTINGS,
+                title: "Settings",
                 loadComponent: () =>
                     import("./pages/settings/settings.component").then(
                         (m) => m.SettingsComponent,
@@ -72,7 +77,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    providers: [AuthGuard, AuthService],
+    providers: [AuthGuard, AuthService, UserService],
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })

@@ -53,11 +53,4 @@ export class AuthService {
             }),
         );
     }
-
-    /**
-     * Получение всех пользователей
-     */
-    getData() {
-        return this.http.get(UrlEnums.URL_USERS);
-    }
 }

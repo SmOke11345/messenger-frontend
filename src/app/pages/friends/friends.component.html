@@ -1,2 +1,6 @@
-<!-- TODO: начать делать страницу Friends -->
 <p>friends works!</p>
+<div *ngIf="usersData$ | async as usersData">
+    <app-card-user
+        *ngFor="let userData of usersData"
+        [userData]="userData"></app-card-user>
+</div>

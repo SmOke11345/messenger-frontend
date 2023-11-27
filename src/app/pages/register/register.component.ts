@@ -1,20 +1,23 @@
 import { Component } from "@angular/core";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+    FormControl,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from "@angular/forms";
 import { AuthService } from "../../service/auth.service";
 import { UploadImgService } from "../../service/upload-img.service";
 import { Router, RouterLink } from "@angular/router";
 import { CommonModule, NgForOf, NgIf } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
+import { UrlEnums } from "../../models/Enums/UrlEnums";
 
 @Component({
     selector: "messenger-register",
     standalone: true,
     templateUrl: "./register.component.html",
     styleUrls: ["./register.component.scss"],
-    providers: [
-        AuthService,
-        UploadImgService,
-    ],
+    providers: [AuthService, UploadImgService],
     imports: [
         HttpClientModule,
         CommonModule,
@@ -25,16 +28,15 @@ import { HttpClientModule } from "@angular/common/http";
     ],
 })
 export class RegisterComponent {
-    // Используется только для вывода изображений
-    imgAcc: string = "";
-
-    show: boolean = false;
+    imgAcc: string = ""; // Используется только для вывода изображений
+    errors: string[] = [];
     inputType: string = "password";
 
-    errors: string[] = [];
     form: FormGroup;
     // @ts-ignore
     selectedFile: File;
+
+    show: boolean = false;
 
     constructor(
         private authService: AuthService,
@@ -49,7 +51,9 @@ export class RegisterComponent {
                 Validators.required,
                 Validators.minLength(6),
             ]),
-            profile_img: new FormControl(""),
+            // TODO: установить стандартный путь к изображению,
+            //  на тот случай если пользователь не выбрал изображения
+            profile_img: new FormControl(" "),
         });
     }
 
@@ -68,6 +72,7 @@ export class RegisterComponent {
      * @param event
      */
     onSelectFile(event: any) {
+        // TODO: Сделать валидацию изображения по размеру
         this.selectedFile = event.target.files[0];
 
         // Вывод изображения после получения
@@ -79,15 +84,10 @@ export class RegisterComponent {
 
         // Добавление в поле profile_img путь к изображению
         let filename = this.selectedFile.name;
+        filename = filename.replace(/\s+/g, ""); // Убираем пробелы
 
-        // TODO: добавлять какой либо путь к стандартной картинке,
-        //  если пользователь не выбрал никакого изображения
-
-        return this.form.controls["profile_img"].setValue(
-            `https://localhost:3000/api/users/upload/${filename.replace(
-                /\s+/g,
-                "",
-            )}`,
+        this.form.controls["profile_img"].setValue(
+            `${UrlEnums.URL_USERS}/upload/${filename}`,
         );
     }
 
@@ -112,7 +112,6 @@ export class RegisterComponent {
         this.authService
             .register({
                 ...this.form.value,
-                // password: bcrypt.hash(this.form.controls["password"].value, 10),
             })
             .subscribe({
                 next: (response) => {

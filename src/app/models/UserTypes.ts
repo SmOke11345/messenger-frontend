@@ -1,13 +1,25 @@
-export interface User {
+export type User = {
     id?: number;
     name: string;
     email: string;
     lastname?: string;
     password: string;
     profile_img?: string;
-}
-
-// Используется для типизации полученных данных после аутентификации пользователя
-export type LoginResponse = {
-    access_token: string;
 };
+
+type Cookie = {
+    originalMaxAge: number;
+    expires: Date;
+    httpOnly: boolean;
+    path: string;
+};
+
+export interface LoginResponse {
+    access_token: string;
+    data: {
+        cookie: Cookie;
+        passport: {
+            user: User;
+        };
+    };
+}

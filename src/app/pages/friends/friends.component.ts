@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { UserService } from "../../service/user.service";
 import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
+
+import { UserService } from "../../service/user.service";
 import { User } from "../../models/UserTypes";
-import { Observable } from "rxjs";
 import { CardUserComponent } from "../../components/card-user/card-user.component";
+
+import { Observable } from "rxjs";
 
 @Component({
     selector: "messenger-friends",
@@ -22,6 +24,10 @@ export class FriendsComponent implements OnInit {
      * Получение всех пользователей после перехода на страницу
      */
     ngOnInit() {
+        // TODO: Сделать отправку запроса,
+        //  которая включает в себя user_id пользователя,
+        //  и получить друзей пользователя. Затем сохранить их в отдельный массив.
+        //  Можно сделать как при нажатии на кнопку, так и через ngOnInit (Мне кажется будет правильней).
         this.usersData$ = this.userService.getAllUsers();
     }
 }

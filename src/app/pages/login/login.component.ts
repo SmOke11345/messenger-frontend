@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { AuthService } from "../../service/auth.service";
-import { CommonModule, NgForOf, NgIf } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { CommonModule, NgForOf, NgIf } from "@angular/common";
+
+import { AuthService } from "../../service/auth.service";
 
 @Component({
     selector: "messenger-login",

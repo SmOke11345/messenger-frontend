@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule, NgOptimizedImage } from "@angular/common";
+
 import { User } from "../../models/UserTypes";
 
 @Component({

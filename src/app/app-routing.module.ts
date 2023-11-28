@@ -1,14 +1,15 @@
 import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from "@angular/core";
+
 import { RegisterComponent } from "./pages/register/register.component";
 import { LoginComponent } from "./pages/login/login.component";
-import { NgModule } from "@angular/core";
-import { AppComponent } from "./app.component";
-import { PathEnum } from "./models/Enums/PathEnum";
 import { HomeComponent } from "./pages/home/home.component";
-import { AuthGuard } from "./pages/guards/auth.guard";
-import { AuthService } from "./service/auth.service";
+import { AppComponent } from "./app.component";
 import { LayoutComponent } from "./pages/layout.component";
 import { UserService } from "./service/user.service";
+import { AuthService } from "./service/auth.service";
+import { AuthGuard } from "./guards/auth.guard";
+import { PathEnum } from "./models/Enums/PathEnum";
 
 export const routes: Routes = [
     {

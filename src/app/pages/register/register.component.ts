@@ -5,11 +5,12 @@ import {
     ReactiveFormsModule,
     Validators,
 } from "@angular/forms";
-import { AuthService } from "../../service/auth.service";
-import { UploadImgService } from "../../service/upload-img.service";
+import { HttpClientModule } from "@angular/common/http";
 import { Router, RouterLink } from "@angular/router";
 import { CommonModule, NgForOf, NgIf } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+
+import { AuthService } from "../../service/auth.service";
+import { UploadImgService } from "../../service/upload-img.service";
 import { UrlEnums } from "../../models/Enums/UrlEnums";
 
 @Component({

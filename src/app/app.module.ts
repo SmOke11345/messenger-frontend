@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
-import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
+
+import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
     imports: [AppRoutingModule, HttpClientModule],

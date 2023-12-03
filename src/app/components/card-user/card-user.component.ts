@@ -4,7 +4,7 @@ import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { User } from "../../models/UserTypes";
 
 @Component({
-    selector: "app-card-user",
+    selector: "card-user",
     standalone: true,
     imports: [CommonModule, NgOptimizedImage],
     templateUrl: "./card-user.component.html",

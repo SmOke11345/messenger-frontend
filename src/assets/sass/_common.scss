@@ -1,108 +1,122 @@
 @import "variables";
 
 .container {
-	max-width: 100%;
-	width: 1200px;
-	padding: 0 20px;
-	margin: 0 auto;
+    max-width: 100%;
+    width: 1200px;
+    padding: 0 20px;
+    margin: 0 auto;
 }
 
 .wrapper {
-	@extend %wrapper;
+    @extend %wrapper;
 }
 
 .form {
-	// TODO: сделать какой либо фон, если дизайн будет скушный
-	//background-color: #fcf8f8;
-	//border-radius: 10px;
-	//border: inset 2px #fcf8f8;
+    // TODO: сделать какой либо фон, если дизайн будет скушный
+    //background-color: #fcf8f8;
+    //border-radius: 10px;
+    //border: inset 2px #fcf8f8;
 
-	input[type="text"],
-	input[type="password"] {
-		background-color: $white;
-		border: none;
-		border-radius: 4px;
-		padding: 13px 8px;
-		font-family: "Archivo", sans-serif;
-		font-weight: 400;
-		font-size: $font-p;
-		width: 100%;
-		min-width: 300px;
-	}
+    input[type="text"],
+    input[type="password"] {
+        background-color: $white;
+        border: none;
+        border-radius: 4px;
+        padding: 13px 8px;
+        width: 100%;
+        min-width: 300px;
 
-	label {
-		padding: 0 0 5px 10px;
-		display: block;
-	}
+        &::placeholder {
+            font-family: "Archivo", sans-serif;
+            font-weight: 400;
+            font-size: $font-p;
+        }
+    }
 
-	&__top {
-		text-align: center;
-	}
+    label {
+        padding: 0 0 5px 10px;
+        display: block;
+    }
 
-	&__body {
-		margin: 40px 0;
-		display: grid;
-		gap: 14px;
-	}
+    &__top {
+        text-align: center;
+    }
 
-	.password_eye {
-		position: absolute;
-		right: 10px;
-		top: 30px;
-		cursor: pointer;
-	}
+    &__body {
+        margin: 40px 0;
+        display: grid;
+        gap: 14px;
+    }
 
-	.wrapper_content:last-child {
-		position: relative;
-	}
+    .password_eye {
+        position: absolute;
+        right: 10px;
+        top: 30px;
+        cursor: pointer;
+    }
+
+    .wrapper_content:last-child {
+        position: relative;
+    }
 }
 
 .btn {
-	background-color: $primary-color;
-	border-radius: 20px;
-	width: 327px;
-	text-align: center;
+    background-color: $primary-color;
+    border-radius: 20px;
+    width: 327px;
+    text-align: center;
 
-	a {
-		display: block;
-		padding: 12px 0;
-		color: $white;
-		font-size: calc(#{$font-p + 2px});
-	}
+    a {
+        display: block;
+        padding: 12px 0;
+        color: $white;
+        font-size: calc(#{$font-p + 2px});
+    }
 
-	&__subtitle {
-		margin-top: 10px;
-		text-align: center;
+    &__subtitle {
+        margin-top: 10px;
+        text-align: center;
 
-		a {
-			color: $primary-color;
-		}
-	}
+        a {
+            color: $primary-color;
+        }
+    }
 }
 
 .center .container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 @media screen and (max-width: 720px) {
-	.container {
-		width: 100%;
-	}
+    .container {
+        width: 100%;
+    }
 }
 
 .error,
 .require {
-	color: $white;
-	display: block;
-	padding: 10px 10px;
-	background-color: $red;
-	border-radius: 4px;
-	margin-top: 10px;
+    color: $white;
+    display: block;
+    padding: 10px 10px;
+    background-color: $red;
+    border-radius: 4px;
+    margin-top: 10px;
 }
 
 .require {
-	background-color: $green;
+    background-color: $green;
+}
+
+.wrapper {
+    margin-bottom: 20px;
+    align-items: baseline;
+
+    .title {
+        h2 {
+            font-size: calc(#{$font-h} - 6px);
+        }
+    }
 }

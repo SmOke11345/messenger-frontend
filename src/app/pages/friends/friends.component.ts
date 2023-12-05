@@ -27,8 +27,6 @@ export class FriendsComponent implements OnInit {
         // TODO: Сделать динамическое обновление списка друзей, после добавление друга.
         this.usersData$ = this.userService.getFriends();
 
-        this.usersData$.subscribe((response) => {});
-
         if (!this.usersData$) {
             console.log("У вас еще нет друзей, добавьте их!");
         }

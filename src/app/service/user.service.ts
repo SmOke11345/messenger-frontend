@@ -20,4 +20,22 @@ export class UserService {
     getAllUsers() {
         return this.http.get<User[]>(UrlEnums.URL_USERS);
     }
+
+    /**
+     * Получение списка друзей пользователя
+     */
+    getFriends() {
+        return this.http.get<User[]>(`${UrlEnums.URL_FRIENDS}/${this.user_id}`);
+    }
+
+    /**
+     * Добавление друга
+     */
+    addFriends() {
+        const id = 70;
+        return this.http.post(`${UrlEnums.URL_FRIENDS}/add`, {
+            auth_user: +this.user_id,
+            friend_id: id,
+        });
+    }
 }

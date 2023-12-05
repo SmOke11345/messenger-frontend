@@ -24,10 +24,19 @@ export class FriendsComponent implements OnInit {
      * Получение всех пользователей после перехода на страницу
      */
     ngOnInit() {
-        // TODO: Сделать отправку запроса,
-        //  которая включает в себя user_id пользователя,
-        //  и получить друзей пользователя. Затем сохранить их в отдельный массив.
-        //  Можно сделать как при нажатии на кнопку, так и через ngOnInit (Мне кажется будет правильней).
-        this.usersData$ = this.userService.getAllUsers();
+        // TODO: Сделать динамическое обновление списка друзей, после добавление друга.
+        this.usersData$ = this.userService.getFriends();
+
+        this.usersData$.subscribe((response) => {});
+
+        if (!this.usersData$) {
+            console.log("У вас еще нет друзей, добавьте их!");
+        }
+    }
+
+    addFriend() {
+        this.userService.addFriends().subscribe((response) => {
+            console.log(response);
+        });
     }
 }

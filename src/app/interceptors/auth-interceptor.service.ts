@@ -7,6 +7,7 @@ import {
 import { Injectable } from "@angular/core";
 
 import { Observable } from "rxjs";
+import { CookieService } from "ngx-cookie-service";
 
 /**
  *TODO: Нужно сделать чтобы каждый переход ссылался на backend запрос для идентификации пользователя по токену,
@@ -15,6 +16,8 @@ import { Observable } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class AuthInterceptor implements HttpInterceptor {
+    constructor(private cookieService: CookieService) {}
+
     /**
      * Используется для обработки запросов, и активируется только когда выполняется http запрос на backend
      * @param request
@@ -26,8 +29,8 @@ export class AuthInterceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         console.log("Intercepted request:", request);
 
-        // Получаем токен из localStorage
-        const token = localStorage.getItem("access_token");
+        // Получаем токен из cookie
+        const token = this.cookieService.get("access_token");
 
         if (token) {
             // Устанавливаем токен в заголовок

@@ -6,7 +6,7 @@ import { LoginComponent } from "./pages/login/login.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { AppComponent } from "./app.component";
 import { LayoutComponent } from "./pages/layout.component";
-import { UserService } from "./service/user.service";
+import { UsersService } from "./service/users.service";
 import { AuthService } from "./service/auth.service";
 import { AuthGuard } from "./guards/auth.guard";
 import { PathEnum } from "./models/Enums/PathEnum";
@@ -62,6 +62,14 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: `${PathEnum.PATH_FRIENDS}/find-friends`,
+                title: "Find Friends",
+                loadComponent: () =>
+                    import("./pages/find-friends/find-friends.component").then(
+                        (m) => m.FindFriendsComponent,
+                    ),
+            },
+            {
                 path: PathEnum.PATH_SETTINGS,
                 title: "Settings",
                 loadComponent: () =>
@@ -78,7 +86,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    providers: [AuthGuard, AuthService, UserService],
+    providers: [AuthGuard, AuthService, UsersService],
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })

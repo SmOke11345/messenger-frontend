@@ -8,13 +8,14 @@
 
     &__img {
         .no_img {
-            padding: 6px 8px;
+            padding: 9px 11px;
             border: 1px solid $grey;
+            background-color: $grey;
         }
 
         img,
         .no_img {
-            border-radius: 16px;
+            border-radius: 12px;
         }
     }
 
@@ -22,7 +23,7 @@
         margin: 5px 0 0 12px;
 
         p {
-            font-weight: 600;
+            font-weight: 500;
         }
     }
 }

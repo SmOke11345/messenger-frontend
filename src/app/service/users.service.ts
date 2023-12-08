@@ -2,12 +2,12 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { UrlEnums } from "../models/Enums/UrlEnums";
-import { User } from "../models/UserTypes";
+import { FriendResponse, User } from "../models/UserTypes";
 import { CookieService } from "ngx-cookie-service";
 
 @Injectable({ providedIn: "root" })
-export class UserService {
-    private user_id = this.cookieService.get("user_id");
+export class UsersService {
+    private user_id = Number(this.cookieService.get("user_id"));
 
     constructor(
         private http: HttpClient,
@@ -30,12 +30,22 @@ export class UserService {
 
     /**
      * Добавление друга
+     * @param id
      */
-    addFriends() {
-        const id = 70;
-        return this.http.post(`${UrlEnums.URL_FRIENDS}/add`, {
-            auth_user: +this.user_id,
-            friend_id: id,
+    addFriend(id: number) {
+        return this.http.post<FriendResponse>(`${UrlEnums.URL_FRIENDS}/add`, {
+            auth_user_id: this.user_id,
+            id,
         });
+    }
+
+    deleteFriend(id: number) {
+        return this.http.post<FriendResponse>(
+            `${UrlEnums.URL_FRIENDS}/delete`,
+            {
+                auth_user_id: this.user_id,
+                id,
+            },
+        );
     }
 }

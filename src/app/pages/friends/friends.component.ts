@@ -1,40 +1,30 @@
 import { Component, OnInit } from "@angular/core";
 import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
 
-import { UserService } from "../../service/user.service";
+import { UsersService } from "../../service/users.service";
 import { User } from "../../models/UserTypes";
 import { CardUserComponent } from "../../components/card-user/card-user.component";
 
 import { Observable } from "rxjs";
+import { RouterLink } from "@angular/router";
 
 @Component({
     selector: "messenger-friends",
     standalone: true,
+    imports: [NgForOf, AsyncPipe, NgIf, CardUserComponent, RouterLink],
+    providers: [UsersService],
     templateUrl: "./friends.component.html",
-    providers: [UserService],
-    styleUrls: ["./friends.component.scss"],
-    imports: [NgForOf, AsyncPipe, NgIf, CardUserComponent],
+    styles: ["button.add {width: 20px}"],
 })
 export class FriendsComponent implements OnInit {
-    usersData$: Observable<User[]> | undefined;
+    friendsData$: Observable<User[]> | undefined;
 
-    constructor(private userService: UserService) {}
+    constructor(private userService: UsersService) {}
 
     /**
-     * Получение всех пользователей после перехода на страницу
+     * Получение друзей после перехода на страницу
      */
     ngOnInit() {
-        // TODO: Сделать динамическое обновление списка друзей, после добавление друга.
-        this.usersData$ = this.userService.getFriends();
-
-        if (!this.usersData$) {
-            console.log("У вас еще нет друзей, добавьте их!");
-        }
-    }
-
-    addFriend() {
-        this.userService.addFriends().subscribe((response) => {
-            console.log(response);
-        });
+        this.friendsData$ = this.userService.getFriends();
     }
 }

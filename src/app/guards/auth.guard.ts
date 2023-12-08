@@ -15,7 +15,7 @@ import { CookieService } from "ngx-cookie-service";
 export class AuthGuard implements CanActivate, CanActivateChild {
     constructor(private router: Router, private cookieService: CookieService) {}
 
-    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    canActivate(_next: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {
         const token = this.cookieService.check("access_token");
         if (token) {
             return true;

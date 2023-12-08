@@ -9,11 +9,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { CookieService } from "ngx-cookie-service";
 
-/**
- *TODO: Нужно сделать чтобы каждый переход ссылался на backend запрос для идентификации пользователя по токену,
- * К примеру при нажатии на кнопку перехода на другой роут происходит запрос на backend, и затем, при успешной проверки пропускает пользователя
- */
-
 @Injectable({ providedIn: "root" })
 export class AuthInterceptor implements HttpInterceptor {
     constructor(private cookieService: CookieService) {}

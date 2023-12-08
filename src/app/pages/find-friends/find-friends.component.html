@@ -1,21 +1,23 @@
-<section class="section friends">
+<section class="section find-friends">
     <div class="container">
         <div class="wrapper">
-            <div class="title">
-                <h2>Contacts</h2>
-            </div>
-            <button class="add" routerLink="/friends/find-friends">
+            <button class="prev" routerLink="/friends">
                 <svg
                     fill="none"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    width="14"
+                    height="12"
+                    viewBox="0 0 8 12"
+                    width="8"
                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 8V14H6V8H0V6H6V0H8V6H14V8H8Z" fill="#0F1828" />
+                    <path
+                        d="M0.287994 5.99999L6.29799 12.01L7.71199 10.596L3.11199 5.99599L7.71199 1.39599L6.29799 -0.0100098L0.287994 5.99999Z"
+                        fill="#0F1828" />
                 </svg>
             </button>
+            <div class="title">
+                <h2>Search Friends</h2>
+            </div>
         </div>
-        <div *ngIf="friendsData$ | async as friendsData" class="friends__grid">
+        <div *ngIf="usersData$ | async as usersData" class="friends__grid">
             <div class="friends__search">
                 <label for="search">
                     <svg
@@ -31,9 +33,9 @@
                 </label>
                 <input id="search" name="q" placeholder="Search" type="text" />
             </div>
-            <card-user
-                *ngFor="let userData of friendsData"
-                [userData]="userData">
+            <!-- TODO: Узнать как использовать один и тот же шаблон-->
+            <!-- но чтобы в одном отображалась кнопка добавить, а в другом нет-->
+            <card-user *ngFor="let userData of usersData" [userData]="userData">
             </card-user>
         </div>
     </div>

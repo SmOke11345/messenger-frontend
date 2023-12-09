@@ -33,6 +33,7 @@
             </div>
             <card-user
                 *ngFor="let userData of friendsData"
+                [enableButton]="enableButton"
                 [userData]="userData">
             </card-user>
         </div>

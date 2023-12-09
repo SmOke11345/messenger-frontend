@@ -19,7 +19,7 @@ import { RouterLink } from "@angular/router";
             }
 
             button.prev {
-                width: 24px;
+                width: 10px;
                 margin-right: 10px;
             }
         `,
@@ -27,6 +27,7 @@ import { RouterLink } from "@angular/router";
 })
 export class FindFriendsComponent implements OnInit {
     usersData$: Observable<User[]> | undefined;
+    enableButton: boolean = true;
 
     constructor(private usersService: UsersService) {}
 
@@ -35,15 +36,5 @@ export class FindFriendsComponent implements OnInit {
      */
     ngOnInit() {
         this.usersData$ = this.usersService.getAllUsers();
-    }
-
-    /**
-     * Добавление в друзья
-     * @param id
-     */
-    addFriend(id: number) {
-        this.usersService.addFriend(id).subscribe((response) => {
-            console.log(response);
-        });
     }
 }

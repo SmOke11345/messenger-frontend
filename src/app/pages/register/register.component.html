@@ -72,16 +72,16 @@
                     </span>
                 </div>
                 <div class="wrapper_content">
-                    <label for="email">Email</label>
+                    <label for="login">Login</label>
                     <input
-                        formControlName="email"
-                        id="email"
-                        name="email"
-                        placeholder="E-mail (Required)"
+                        formControlName="login"
+                        id="login"
+                        name="Login"
+                        placeholder="Login (Required)"
                         required
                         type="text" />
-                    <span *ngIf="form.controls['email'].errors" class="require"
-                        >E-mail should not be empty</span
+                    <span *ngIf="form.controls['login'].errors" class="require"
+                        >Login should not be empty</span
                     >
                 </div>
                 <div class="wrapper_content">

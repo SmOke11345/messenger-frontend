@@ -46,7 +46,7 @@ export class RegisterComponent {
     ) {
         this.form = new FormGroup({
             name: new FormControl(""),
-            email: new FormControl(""),
+            login: new FormControl(""),
             lastname: new FormControl(""),
             password: new FormControl("", [
                 Validators.required,
@@ -104,6 +104,7 @@ export class RegisterComponent {
      */
     removeImg() {
         this.imgAcc = "";
+        this.form.controls["profile_img"].setValue("");
     }
 
     /**

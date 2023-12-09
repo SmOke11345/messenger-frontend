@@ -30,7 +30,7 @@ export class LoginComponent {
 
     constructor(private authService: AuthService) {
         this.form = new FormGroup({
-            email: new FormControl(""),
+            login: new FormControl(""),
             password: new FormControl(""),
         });
     }

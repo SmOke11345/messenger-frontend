@@ -24,10 +24,16 @@
         </div>
     </div>
     <div class="card__name">
-        <p>{{ userData?.name }} {{ userData?.lastname }}</p>
+        <p>{{ userData.name }} {{ userData?.lastname }}</p>
     </div>
     <div>
-        {{ userData?.id }}
+        {{ userData.id }}
     </div>
     <!--TODO: Сделать отображение статуса активности, "онлайн не онлайн и т.п."-->
+    <div *ngIf="enableButton">
+        <button (click)="addFriend(userData.id)">Добавить</button>
+    </div>
+    <div *ngIf="!enableButton">
+        <button (click)="deleteFriend(userData.id)">Удалить</button>
+    </div>
 </div>

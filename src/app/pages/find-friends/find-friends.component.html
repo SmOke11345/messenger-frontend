@@ -33,9 +33,10 @@
                 </label>
                 <input id="search" name="q" placeholder="Search" type="text" />
             </div>
-            <!-- TODO: Узнать как использовать один и тот же шаблон-->
-            <!-- но чтобы в одном отображалась кнопка добавить, а в другом нет-->
-            <card-user *ngFor="let userData of usersData" [userData]="userData">
+            <card-user
+                *ngFor="let userData of usersData"
+                [enableButton]="enableButton"
+                [userData]="userData">
             </card-user>
         </div>
     </div>

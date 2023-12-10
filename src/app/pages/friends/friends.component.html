@@ -15,8 +15,8 @@
                 </svg>
             </button>
         </div>
-        <div *ngIf="friendsData$ | async as friendsData" class="friends__grid">
-            <div class="friends__search">
+        <div class="friends__grid">
+            <div *ngIf="friendsData.length !== 0" class="friends__search">
                 <label for="search">
                     <svg
                         fill="#adb5bd"
@@ -30,6 +30,9 @@
                     </svg>
                 </label>
                 <input id="search" name="q" placeholder="Search" type="text" />
+            </div>
+            <div *ngIf="error">
+                {{ error }}
             </div>
             <card-user
                 *ngFor="let userData of friendsData"

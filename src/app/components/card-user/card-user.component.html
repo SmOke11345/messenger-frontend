@@ -1,39 +1,77 @@
-<div class="card wrapper">
-    <div class="card__img">
-        <div *ngIf="userData?.profile_img">
-            <img
-                [src]="userData?.profile_img"
-                alt=""
-                height="48px"
-                width="48px" />
+<div class="card">
+    <div class="wrapper">
+        <div class="card__img">
+            <div *ngIf="userData?.profile_img">
+                <img
+                    [src]="userData?.profile_img"
+                    alt=""
+                    height="48px"
+                    width="48px" />
+            </div>
+            <div *ngIf="!userData?.profile_img" class="no_img">
+                <svg
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"
+                        fill="#0F1828" />
+                    <path
+                        d="M6.34315 16.3431C4.84285 17.8434 4 19.8783 4 22H6C6 20.4087 6.63214 18.8826 7.75736 17.7574C8.88258 16.6321 10.4087 16 12 16C13.5913 16 15.1174 16.6321 16.2426 17.7574C17.3679 18.8826 18 20.4087 18 22H20C20 19.8783 19.1571 17.8434 17.6569 16.3431C16.1566 14.8429 14.1217 14 12 14C9.87827 14 7.84344 14.8429 6.34315 16.3431Z"
+                        fill="#0F1828" />
+                </svg>
+            </div>
         </div>
-        <div *ngIf="!userData?.profile_img" class="no_img">
-            <svg
-                fill="none"
-                height="24"
-                viewBox="0 0 24 24"
-                width="24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"
-                    fill="#0F1828" />
-                <path
-                    d="M6.34315 16.3431C4.84285 17.8434 4 19.8783 4 22H6C6 20.4087 6.63214 18.8826 7.75736 17.7574C8.88258 16.6321 10.4087 16 12 16C13.5913 16 15.1174 16.6321 16.2426 17.7574C17.3679 18.8826 18 20.4087 18 22H20C20 19.8783 19.1571 17.8434 17.6569 16.3431C16.1566 14.8429 14.1217 14 12 14C9.87827 14 7.84344 14.8429 6.34315 16.3431Z"
-                    fill="#0F1828" />
-            </svg>
+        <div class="card__name">
+            <p>{{ userData.name }} {{ userData?.lastname }}</p>
         </div>
-    </div>
-    <div class="card__name">
-        <p>{{ userData.name }} {{ userData?.lastname }}</p>
-    </div>
-    <div>
-        {{ userData.id }}
+        <div class="card__user_id">
+            {{ userData.id }}
+        </div>
     </div>
     <!--TODO: Сделать отображение статуса активности, "онлайн не онлайн и т.п."-->
     <div *ngIf="enableButton">
-        <button (click)="addFriend(userData.id)">Добавить</button>
+        <button
+            (click)="addFriend(userData.id)"
+            *ngIf="!disable"
+            class="btn--add">
+            <svg
+                fill="none"
+                height="17"
+                viewBox="0 0 21 17"
+                width="21"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M13 16C13 13.79 10.314 12 7 12C3.686 12 1 13.79 1 16M17 13V10M17 10V7M17 10H14M17 10H20M7 9C5.93913 9 4.92172 8.57857 4.17157 7.82843C3.42143 7.07828 3 6.06087 3 5C3 3.93913 3.42143 2.92172 4.17157 2.17157C4.92172 1.42143 5.93913 1 7 1C8.06087 1 9.07828 1.42143 9.82843 2.17157C10.5786 2.92172 11 3.93913 11 5C11 6.06087 10.5786 7.07828 9.82843 7.82843C9.07828 8.57857 8.06087 9 7 9Z"
+                    stroke="black"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2" />
+            </svg>
+        </button>
+        <div *ngIf="disable" class="green">Добавлен</div>
     </div>
     <div *ngIf="!enableButton">
-        <button (click)="deleteFriend(userData.id)">Удалить</button>
+        <button
+            (click)="deleteFriend(userData.id)"
+            *ngIf="!disable"
+            class="btn--add">
+            <svg
+                fill="none"
+                height="17"
+                viewBox="0 0 21 17"
+                width="21"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M13 16C13 13.79 10.314 12 7 12C3.686 12 1 13.79 1 16M14 10H17H20M7 9C5.93913 9 4.92172 8.57857 4.17157 7.82843C3.42143 7.07828 3 6.06087 3 5C3 3.93913 3.42143 2.92172 4.17157 2.17157C4.92172 1.42143 5.93913 1 7 1C8.06087 1 9.07828 1.42143 9.82843 2.17157C10.5786 2.92172 11 3.93913 11 5C11 6.06087 10.5786 7.07828 9.82843 7.82843C9.07828 8.57857 8.06087 9 7 9Z"
+                    stroke="black"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2" />
+            </svg>
+        </button>
+        <div *ngIf="disable" class="red">Удален</div>
     </div>
 </div>

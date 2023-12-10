@@ -26,5 +26,4 @@ export interface LoginResponse {
 
 export type FriendResponse = {
     auth_user_id: number;
-    id: number;
 };

@@ -1,8 +1,14 @@
 @import "../../app.component";
 
 .card {
+    @extend %wrapper;
     align-items: flex-start;
-    justify-content: flex-start;
+
+    .wrapper {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
     border-bottom: 1px solid $grey;
     padding-bottom: 16px;
 
@@ -25,5 +31,13 @@
         p {
             font-weight: 500;
         }
+    }
+
+    .green {
+        color: green;
+    }
+
+    .red {
+        color: red;
     }
 }

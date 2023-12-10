@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { UrlEnums } from "../models/Enums/UrlEnums";
 import { FriendResponse, User } from "../models/UserTypes";
 import { CookieService } from "ngx-cookie-service";
+import { catchError, throwError } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class UsersService {
@@ -25,7 +26,14 @@ export class UsersService {
      * Получение списка друзей пользователя
      */
     getFriends() {
-        return this.http.get<User[]>(`${UrlEnums.URL_FRIENDS}/${this.user_id}`);
+        return this.http
+            .get<User[]>(`${UrlEnums.URL_FRIENDS}/${this.user_id}`)
+            .pipe(
+                // Обрабатываем полученные ошибки с сервера
+                catchError((error) => {
+                    return throwError(error);
+                }),
+            );
     }
 
     /**
@@ -33,18 +41,19 @@ export class UsersService {
      * @param id
      */
     addFriend(id: number) {
-        return this.http.post<FriendResponse>(`${UrlEnums.URL_FRIENDS}/add`, {
-            auth_user_id: this.user_id,
-            id,
-        });
+        return this.http.post<FriendResponse>(
+            `${UrlEnums.URL_FRIENDS}/add/${id}`,
+            {
+                auth_user_id: this.user_id,
+            },
+        );
     }
 
     deleteFriend(id: number) {
         return this.http.post<FriendResponse>(
-            `${UrlEnums.URL_FRIENDS}/delete`,
+            `${UrlEnums.URL_FRIENDS}/delete/${id}`,
             {
                 auth_user_id: this.user_id,
-                id,
             },
         );
     }

@@ -16,6 +16,8 @@ export class CardUserComponent {
     @Input() userData: User;
     @Input() enableButton: boolean;
 
+    disable: boolean = false;
+
     constructor(private usersService: UsersService) {
         this.userData = {} as User;
         this.enableButton = true || false;
@@ -27,7 +29,8 @@ export class CardUserComponent {
      */
     addFriend(id: number) {
         this.usersService.addFriend(id).subscribe((response) => {
-            console.log(response);
+            this.disable = true;
+            console.log("Добавлен", response);
         });
     }
 
@@ -37,7 +40,8 @@ export class CardUserComponent {
      */
     deleteFriend(id: number) {
         this.usersService.deleteFriend(id).subscribe((response) => {
-            console.log("delete", response);
+            this.disable = true;
+            console.log("Удален", response);
         });
     }
 }

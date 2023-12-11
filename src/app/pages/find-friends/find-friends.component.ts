@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterLink } from "@angular/router";
+import { Observable } from "rxjs";
+
 import { CardUserComponent } from "../../components/card-user/card-user.component";
 import { UsersService } from "../../service/users.service";
 import { User } from "../../models/UserTypes";
-import { Observable } from "rxjs";
-import { RouterLink } from "@angular/router";
 
 @Component({
     selector: "app-find-friends",

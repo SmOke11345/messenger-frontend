@@ -19,7 +19,9 @@ export class UsersService {
      * Получение всех пользователей
      */
     getAllUsers() {
-        return this.http.get<User[]>(UrlEnums.URL_USERS);
+        return this.http.get<User[]>(
+            `${UrlEnums.URL_USERS}?id=${this.user_id}`,
+        );
     }
 
     /**

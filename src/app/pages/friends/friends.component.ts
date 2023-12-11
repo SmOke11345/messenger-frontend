@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 import { UsersService } from "../../service/users.service";
 import { CardUserComponent } from "../../components/card-user/card-user.component";
-import { RouterLink } from "@angular/router";
 import { User } from "../../models/UserTypes";
 
 @Component({

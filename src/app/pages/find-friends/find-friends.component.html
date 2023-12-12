@@ -17,9 +17,9 @@
                 <h2>Search Friends</h2>
             </div>
         </div>
-        <div *ngIf="usersData$ | async as usersData" class="friends__grid">
+        <div *ngIf="usersData" class="friends__grid">
             <div class="friends__search">
-                <label for="search">
+                <label (click)="getSearchUsers()" for="search">
                     <svg
                         fill="#adb5bd"
                         height="24"
@@ -31,13 +31,22 @@
                             fill="#ADB5BD" />
                     </svg>
                 </label>
-                <input id="search" name="q" placeholder="Search" type="text" />
+                <input
+                    (blur)="getSearchUsers()"
+                    (input)="Search(value)"
+                    (keydown.enter)="getSearchUsers()"
+                    [(ngModel)]="value"
+                    id="search"
+                    name="q"
+                    placeholder="Search"
+                    type="text" />
             </div>
-            <card-user
-                *ngFor="let userData of usersData"
-                [enableButton]="enableButton"
-                [userData]="userData">
+            <div *ngIf="error">
+                {{ error }}
+            </div>
+            <card-user *ngFor="let userData of usersData" [userData]="userData">
             </card-user>
+            <!--                [enableButton]="enableButton"-->
         </div>
     </div>
 </section>

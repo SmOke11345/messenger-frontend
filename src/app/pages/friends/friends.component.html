@@ -2,7 +2,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="title">
-                <h2>Contacts</h2>
+                <h2>Friends</h2>
             </div>
             <button class="add" routerLink="/friends/find-friends">
                 <svg
@@ -29,16 +29,22 @@
                             fill="#ADB5BD" />
                     </svg>
                 </label>
-                <input id="search" name="q" placeholder="Search" type="text" />
+                <input
+                    (input)="Search(value)"
+                    [(ngModel)]="value"
+                    id="search"
+                    name="q"
+                    placeholder="Search"
+                    type="text" />
             </div>
             <div *ngIf="error">
                 {{ error }}
             </div>
             <card-user
                 *ngFor="let userData of friendsData"
-                [enableButton]="enableButton"
                 [userData]="userData">
             </card-user>
+            <!--                [enableButton]="enableButton"-->
         </div>
     </div>
 </section>

@@ -25,7 +25,7 @@ export class UsersService {
     }
 
     /**
-     * Получение списка друзей пользователя
+     * Получение списка контактов пользователя
      */
     getFriends() {
         return this.http
@@ -39,7 +39,7 @@ export class UsersService {
     }
 
     /**
-     * Добавление друга
+     * Добавление контакта
      * @param id
      */
     addFriend(id: number) {
@@ -58,5 +58,16 @@ export class UsersService {
                 auth_user_id: this.user_id,
             },
         );
+    }
+
+    getSearchUsers(value: string) {
+        return this.http
+            .get<User[]>(`${UrlEnums.URL_USERS}/search?q=${value}`)
+            .pipe(
+                // Обрабатываем полученные ошибки с сервера
+                catchError((error) => {
+                    return throwError(error);
+                }),
+            );
     }
 }

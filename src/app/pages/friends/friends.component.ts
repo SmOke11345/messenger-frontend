@@ -24,7 +24,7 @@ import { FormsModule } from "@angular/forms";
 })
 export class FriendsComponent implements OnInit {
     friendsData: User[] = [];
-    // enableButton: boolean = false;
+    enableButton: boolean = false;
 
     error: string = "";
     value: string = "";

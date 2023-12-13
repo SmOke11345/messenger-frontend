@@ -62,7 +62,9 @@ export class UsersService {
 
     getSearchUsers(value: string) {
         return this.http
-            .get<User[]>(`${UrlEnums.URL_USERS}/search?q=${value}`)
+            .post<User[]>(`${UrlEnums.URL_USERS}/search?q=${value}`, {
+                auth_user_id: this.user_id,
+            })
             .pipe(
                 // Обрабатываем полученные ошибки с сервера
                 catchError((error) => {

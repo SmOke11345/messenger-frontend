@@ -14,15 +14,14 @@ import { UsersService } from "../../service/users.service";
 })
 export class CardUserComponent {
     @Input() userData: User;
-    // @Input() enableButton: boolean;
+    @Input() enableButton: boolean;
 
     friends: User[] = [];
-
     disable: boolean = false;
 
     constructor(private usersService: UsersService) {
         this.userData = {} as User;
-        // this.enableButton = true || false;
+        this.enableButton = true || false;
     }
 
     /**
@@ -45,13 +44,5 @@ export class CardUserComponent {
             this.disable = true;
             console.log("Удален", response);
         });
-    }
-
-    // TODO: Если пользователь с таким id уже есть в массиве, то отображать одно, если нет то другое
-
-    sortFriends() {
-        this.usersService
-            .getFriends()
-            .subscribe((data) => (this.friends = data));
     }
 }

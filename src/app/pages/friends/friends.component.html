@@ -42,9 +42,9 @@
             </div>
             <card-user
                 *ngFor="let userData of friendsData"
+                [enableButton]="enableButton"
                 [userData]="userData">
             </card-user>
-            <!--                [enableButton]="enableButton"-->
         </div>
     </div>
 </section>

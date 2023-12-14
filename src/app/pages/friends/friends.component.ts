@@ -25,6 +25,7 @@ import { FormsModule } from "@angular/forms";
 export class FriendsComponent implements OnInit {
     friendsData: User[] = [];
     enableButton: boolean = false;
+    showSearch: boolean = true;
 
     error: string = "";
     value: string = "";
@@ -37,6 +38,8 @@ export class FriendsComponent implements OnInit {
     ngOnInit() {
         this.usersService.getFriends().subscribe({
             next: (data) => {
+                // TODO: Сделать чтобы, если массив пуст, то не показывалась строка поиска, а если нет то, показывалась.
+                this.showSearch = data.length !== 0;
                 this.friendsData = data;
             },
             error: (error) => {
@@ -48,5 +51,20 @@ export class FriendsComponent implements OnInit {
 
     Search(value: string) {
         this.router.navigate([], { queryParams: { q: value } });
+    }
+
+    getSearchFriends(value: string) {
+        return this.usersService.getSearchFriends(value).subscribe({
+            next: (data) => {
+                this.friendsData = data;
+            },
+            error: (error) => {
+                this.friendsData = [];
+                this.error = error.error.message;
+            },
+            complete: () => {
+                this.error = "";
+            },
+        });
     }
 }

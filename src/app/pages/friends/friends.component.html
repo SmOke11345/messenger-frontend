@@ -16,8 +16,8 @@
             </button>
         </div>
         <div class="friends__grid">
-            <div *ngIf="friendsData.length !== 0" class="friends__search">
-                <label for="search">
+            <div *ngIf="showSearch" class="friends__search">
+                <label (click)="getSearchFriends(value)" for="search">
                     <svg
                         fill="#adb5bd"
                         height="24"
@@ -31,6 +31,7 @@
                 </label>
                 <input
                     (input)="Search(value)"
+                    (keydown.enter)="getSearchFriends(value)"
                     [(ngModel)]="value"
                     id="search"
                     name="q"

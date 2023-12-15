@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
     // TODO: работает, только как мне кажется не там где нужно
     ngOnInit() {
         const token = this.cookieService.check("access_token");
-        console.log(token);
         if (token) {
             this.router.navigate(["/chats"]);
         }

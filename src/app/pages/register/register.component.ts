@@ -52,8 +52,6 @@ export class RegisterComponent {
                 Validators.required,
                 Validators.minLength(6),
             ]),
-            // TODO: установить стандартный путь к изображению,
-            //  на тот случай если пользователь не выбрал изображения
             profile_img: new FormControl(" "),
         });
     }

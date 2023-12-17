@@ -44,7 +44,6 @@ export class AuthService {
                 return throwError(error);
             }),
             tap((response) => {
-                console.log(response);
                 this.setCookie(response); // Устанавливает токен в cookie
                 this.router.navigate(["/chats"]);
             }),
@@ -56,15 +55,28 @@ export class AuthService {
      * @param response
      */
     setCookie(response: LoginResponse) {
+        // Время действия
+        const expires = response.data.cookie.expires;
+        // Получаем данные
+        const response_data = response.data.passport.user;
+        // Добавляем только те которые нам нужны
+        const user_data = {
+            id: response_data.id,
+            name: response_data.name,
+            lastname: response_data.lastname,
+            login: response_data.login,
+            profile_img: response_data.profile_img,
+        };
+
         // Установка токена
         this.cookieService.set("access_token", response.access_token, {
-            expires: new Date(response.data.cookie.expires),
+            expires: new Date(expires),
             sameSite: "Strict",
         });
 
-        // Установка id пользователя
-        this.cookieService.set("user_id", `${response.data.passport.user.id}`, {
-            expires: new Date(response.data.cookie.expires),
+        // Установка данных пользователя
+        this.cookieService.set("user_data", `${JSON.stringify(user_data)}`, {
+            expires: new Date(expires),
             sameSite: "Strict",
         });
     }

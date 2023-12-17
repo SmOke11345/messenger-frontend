@@ -1,2 +1,22 @@
-<p>settings works!</p>
-<button (click)="exit()">Exit</button>
+<section class="section settings">
+    <div class="container">
+        <div class="wrapper">
+            <div class="title">
+                <h2>Settings</h2>
+            </div>
+        </div>
+        <div *ngIf="userData as user" class="settings__grid grid">
+            <div class="grid__item">
+                <div class="profile_img">
+                    <img [src]="user?.profile_img" alt="" />
+                </div>
+                <div class="profile_name">
+                    <h3>{{ user.name }} : {{ user.lastname }}</h3>
+                </div>
+            </div>
+            <div class="grid__item">
+                <button (click)="exit()">Exit</button>
+            </div>
+        </div>
+    </div>
+</section>

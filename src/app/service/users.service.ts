@@ -8,7 +8,8 @@ import { catchError, throwError } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class UsersService {
-    private user_id = Number(this.cookieService.get("user_id"));
+    private user_data = this.cookieService.get("user_data");
+    private user_id = JSON.parse(this.user_data).id;
 
     constructor(
         private http: HttpClient,

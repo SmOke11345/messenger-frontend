@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router, RouterLink } from "@angular/router";
 
-import { CardUserComponent } from "../../components/card-user/card-user.component";
-import { UsersService } from "../../service/users.service";
-import { User } from "../../models/UserTypes";
+import { CardUserComponent } from "../../../components/card-user/card-user.component";
+import { UsersService } from "../../../service/users.service";
+import { User } from "../../../models/UserTypes";
 import { FormsModule } from "@angular/forms";
 
 @Component({

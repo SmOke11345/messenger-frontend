@@ -12,17 +12,8 @@
     border-bottom: 1px solid $grey;
     padding-bottom: 16px;
 
-    &__img {
-        .no_img {
-            padding: 9px 11px;
-            border: 1px solid $grey;
-            background-color: $grey;
-        }
-
-        img,
-        .no_img {
-            border-radius: 12px;
-        }
+    &__img img {
+        border-radius: 12px;
     }
 
     &__name {

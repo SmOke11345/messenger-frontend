@@ -65,9 +65,9 @@ export const routes: Routes = [
                 path: `${PathEnum.PATH_FRIENDS}/find-friends`,
                 title: "Find Friends",
                 loadComponent: () =>
-                    import("./pages/find-friends/find-friends.component").then(
-                        (m) => m.FindFriendsComponent,
-                    ),
+                    import(
+                        "./pages/friends/find-friends/find-friends.component"
+                    ).then((m) => m.FindFriendsComponent),
             },
             {
                 path: PathEnum.PATH_SETTINGS,
@@ -75,6 +75,14 @@ export const routes: Routes = [
                 loadComponent: () =>
                     import("./pages/settings/settings.component").then(
                         (m) => m.SettingsComponent,
+                    ),
+            },
+            {
+                path: `${PathEnum.PATH_SETTINGS}/profile`,
+                title: "Profile settings",
+                loadComponent: () =>
+                    import("./pages/settings/profile/profile.component").then(
+                        (m) => m.ProfileComponent,
                     ),
             },
         ],

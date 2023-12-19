@@ -1,0 +1,29 @@
+@import "../../app.component";
+
+.settings {
+    .btn {
+        width: 180px;
+    }
+
+    .grid {
+        display: grid;
+        gap: 20px;
+
+        &__item {
+            @extend %wrapper;
+
+            .profile {
+                @extend %wrapper;
+                align-items: flex-start;
+
+                &__img img {
+                    border-radius: 12px;
+                }
+
+                &__name {
+                    margin: 5px 0 0 20px;
+                }
+            }
+        }
+    }
+}

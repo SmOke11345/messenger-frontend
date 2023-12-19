@@ -120,14 +120,15 @@
     background-color: $green;
 }
 
-.wrapper {
-    margin-bottom: 20px;
+.wrapper:has(.title) {
     align-items: baseline;
+}
 
-    .title {
-        h2 {
-            font-size: calc(#{$font-h} - 6px);
-        }
+.title {
+    margin-bottom: 20px;
+
+    h2 {
+        font-size: calc(#{$font-h} - 6px);
     }
 }
 

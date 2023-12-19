@@ -13,8 +13,6 @@ import { CookieService } from "ngx-cookie-service";
     imports: [RouterOutlet, CommonModule, HttpClientModule],
 })
 export class AppComponent implements OnInit {
-    title = "messenger-frontend";
-
     constructor(private router: Router, private cookieService: CookieService) {}
 
     // TODO: работает, только как мне кажется не там где нужно

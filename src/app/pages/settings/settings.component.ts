@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 import { CookieService } from "ngx-cookie-service";
 import { User } from "../../models/UserTypes";
@@ -8,7 +8,7 @@ import { User } from "../../models/UserTypes";
 @Component({
     selector: "app-settings",
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, RouterLink],
     templateUrl: "./settings.component.html",
     styleUrl: "./settings.component.scss",
 })

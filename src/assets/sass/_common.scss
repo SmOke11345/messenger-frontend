@@ -28,7 +28,7 @@
         border-radius: 4px;
         padding: 13px 8px;
         width: 100%;
-        min-width: 300px;
+        min-width: 260px;
 
         &::placeholder {
             font-family: "Archivo", sans-serif;
@@ -132,6 +132,16 @@
     }
 }
 
+.find-friends .wrapper,
+.profile .wrapper {
+    justify-content: normal;
+}
+
+button.prev {
+    width: 10px;
+    margin-right: 10px;
+}
+
 .friends {
     &__grid {
         display: grid;
@@ -140,6 +150,7 @@
 
     &__search {
         position: relative;
+        margin-bottom: 10px;
 
         label[for="search"] {
             position: absolute;

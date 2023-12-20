@@ -50,11 +50,13 @@ export class AuthService {
         );
     }
 
+    // TODO: Сделать чтобы данные cookie а именно user_data, тоже менялись, при успешном изменение данных пользователя в profile.
+
     /**
      * Используется для установки полученных данных в cookie
      * @param response
      */
-    setCookie(response: LoginResponse) {
+    setCookie(response: any) {
         // Время действия
         const expires = response.data.cookie.expires;
         // Получаем данные
@@ -68,14 +70,14 @@ export class AuthService {
             profile_img: response_data.profile_img,
         };
 
-        // Установка токена
-        this.cookieService.set("access_token", response.access_token, {
+        // Установка данных пользователя
+        this.cookieService.set("user_data", `${JSON.stringify(user_data)}`, {
             expires: new Date(expires),
             sameSite: "Strict",
         });
 
-        // Установка данных пользователя
-        this.cookieService.set("user_data", `${JSON.stringify(user_data)}`, {
+        // Установка токена
+        this.cookieService.set("access_token", response.access_token, {
             expires: new Date(expires),
             sameSite: "Strict",
         });

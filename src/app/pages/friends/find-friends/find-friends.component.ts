@@ -13,18 +13,6 @@ import { FormsModule } from "@angular/forms";
     imports: [CommonModule, CardUserComponent, RouterLink, FormsModule],
     providers: [UsersService],
     templateUrl: "./find-friends.component.html",
-    styles: [
-        `
-            .find-friends .wrapper {
-                justify-content: normal;
-            }
-
-            button.prev {
-                width: 10px;
-                margin-right: 10px;
-            }
-        `,
-    ],
 })
 export class FindFriendsComponent implements OnInit {
     usersData: User[] = [];

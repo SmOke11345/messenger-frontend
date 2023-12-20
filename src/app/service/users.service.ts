@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { UrlEnums } from "../models/Enums/UrlEnums";
 import { User } from "../models/UserTypes";
 import { CookieService } from "ngx-cookie-service";
+
 import { catchError, throwError } from "rxjs";
 
 @Injectable({ providedIn: "root" })
@@ -76,6 +77,16 @@ export class UsersService {
     getSearchFriends(value: string) {
         return this.http
             .get<User[]>(`${UrlEnums.URL_USERS}/friends?q=${value}`)
+            .pipe(
+                catchError((error) => {
+                    return throwError(error);
+                }),
+            );
+    }
+
+    patchProfile(data: User) {
+        return this.http
+            .patch<User>(`${UrlEnums.URL_USERS}/profile/${this.user_id}`, data)
             .pipe(
                 catchError((error) => {
                     return throwError(error);

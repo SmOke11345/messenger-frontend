@@ -9,13 +9,13 @@
 }
 
 html {
-    font-size: 100%;
     font-family: "Archivo", sans-serif;
     font-weight: 400;
+    font-size: $font-p;
 }
 
 body {
-    font-size: $font-p;
+    font-size: 100%;
 }
 
 a {

@@ -78,7 +78,6 @@
                         id="login"
                         name="Login"
                         placeholder="Login (Required)"
-                        required
                         type="text" />
                     <span *ngIf="form.controls['login'].errors" class="require"
                         >Login should not be empty</span
@@ -91,7 +90,6 @@
                         id="name"
                         name="name"
                         placeholder="First Name (Required)"
-                        required
                         type="text" />
                     <span *ngIf="form.controls['name'].errors" class="require"
                         >Name should not be empty</span
@@ -113,8 +111,7 @@
                         formControlName="password"
                         id="password"
                         name="password"
-                        placeholder="Password"
-                        required />
+                        placeholder="Password" />
                     <div
                         (click)="changeShow()"
                         *ngIf="!show"

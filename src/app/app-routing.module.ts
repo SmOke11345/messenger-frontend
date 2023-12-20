@@ -78,7 +78,7 @@ export const routes: Routes = [
                     ),
             },
             {
-                path: `${PathEnum.PATH_SETTINGS}/profile`,
+                path: `${PathEnum.PATH_SETTINGS}/profile/:id`,
                 title: "Profile settings",
                 loadComponent: () =>
                     import("./pages/settings/profile/profile.component").then(

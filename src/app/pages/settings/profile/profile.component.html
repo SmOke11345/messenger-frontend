@@ -1,9 +1,86 @@
 <section class="section profile">
     <div class="container">
-        <div class="title">
-            <h2>Edit Profile</h2>
+        <div class="wrapper">
+            <button class="prev" routerLink="/settings">
+                <svg
+                    fill="none"
+                    height="12"
+                    viewBox="0 0 8 12"
+                    width="8"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M0.287994 5.99999L6.29799 12.01L7.71199 10.596L3.11199 5.99599L7.71199 1.39599L6.29799 -0.0100098L0.287994 5.99999Z"
+                        fill="#0F1828" />
+                </svg>
+            </button>
+            <div class="title">
+                <h2>Edit Profile</h2>
+            </div>
         </div>
         <!-- Содержит img, name, lastname, в виде полей в которых уже встроены значения полученные из user_data. Желательно сделать запрос для смены значений в backend одним rout`om -->
         <!-- TODO: Должен поменять значения в базе данных и в data_user-->
+        <form (ngSubmit)="onSubmit()" [formGroup]="profileEdit" class="form">
+            <div class="form__top">
+                <div *ngIf="errors">
+                    <div class="error">{{ errors }}</div>
+                </div>
+            </div>
+            <div class="form__body">
+                <div class="wrapper_content">
+                    <label for="Name">Name</label>
+                    <input
+                        formControlName="name"
+                        id="name"
+                        name="name"
+                        placeholder="Name"
+                        type="text" />
+                    <span
+                        *ngIf="profileEdit.controls['name'].errors"
+                        class="require"
+                        >Name should not be empty</span
+                    >
+                </div>
+                <div class="wrapper_content">
+                    <label for="Lastname">Lastname</label>
+                    <input
+                        formControlName="lastname"
+                        id="Lastname"
+                        name="lastname"
+                        placeholder="Lastname"
+                        type="text" />
+                </div>
+                <div class="wrapper_content">
+                    <label for="Login">Login</label>
+                    <input
+                        formControlName="login"
+                        id="login"
+                        name="login"
+                        placeholder="Login"
+                        type="text" />
+                    <span
+                        *ngIf="profileEdit.controls['login'].errors"
+                        class="require"
+                        >Login should not be empty</span
+                    >
+                </div>
+                <div class="wrapper_content">
+                    <label for="password">Password</label>
+                    <input
+                        formControlName="password"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        type="text" />
+                    <span
+                        *ngIf="profileEdit.controls['password'].errors"
+                        class="require"
+                        >Minimum length 6 chars</span
+                    >
+                </div>
+            </div>
+            <div class="form__bottom">
+                <button class="btn btn--primary" type="submit">Change</button>
+            </div>
+        </form>
     </div>
 </section>

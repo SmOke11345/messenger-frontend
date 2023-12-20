@@ -45,8 +45,8 @@ export class RegisterComponent {
         private router: Router,
     ) {
         this.form = new FormGroup({
-            name: new FormControl(""),
-            login: new FormControl(""),
+            name: new FormControl("", [Validators.required]),
+            login: new FormControl("", [Validators.required]),
             lastname: new FormControl(""),
             password: new FormControl("", [
                 Validators.required,

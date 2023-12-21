@@ -17,8 +17,6 @@
                 <h2>Edit Profile</h2>
             </div>
         </div>
-        <!-- Содержит img, name, lastname, в виде полей в которых уже встроены значения полученные из user_data. Желательно сделать запрос для смены значений в backend одним rout`om -->
-        <!-- TODO: Должен поменять значения в базе данных и в data_user-->
         <form (ngSubmit)="onSubmit()" [formGroup]="profileEdit" class="form">
             <div class="form__top">
                 <div *ngIf="errors">
@@ -63,7 +61,13 @@
                         >Login should not be empty</span
                     >
                 </div>
-                <div class="wrapper_content">
+                <button
+                    (click)="show = true"
+                    *ngIf="!show"
+                    class="btn btn--change">
+                    Click to change password
+                </button>
+                <div *ngIf="show" class="wrapper_content">
                     <label for="password">Password</label>
                     <input
                         formControlName="password"
@@ -76,6 +80,9 @@
                         class="require"
                         >Minimum length 6 chars</span
                     >
+                    <button (click)="show = false" class="btn btn--change">
+                        Cancel change password
+                    </button>
                 </div>
             </div>
             <div class="form__bottom">

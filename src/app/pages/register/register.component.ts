@@ -10,15 +10,15 @@ import { Router, RouterLink } from "@angular/router";
 import { CommonModule, NgForOf, NgIf } from "@angular/common";
 
 import { AuthService } from "../../service/auth.service";
-import { UploadImgService } from "../../service/upload-img.service";
 import { UrlEnums } from "../../models/Enums/UrlEnums";
+import { UsersService } from "../../service/users.service";
 
 @Component({
     selector: "messenger-register",
     standalone: true,
     templateUrl: "./register.component.html",
     styleUrls: ["./register.component.scss"],
-    providers: [AuthService, UploadImgService],
+    providers: [AuthService, UsersService],
     imports: [
         HttpClientModule,
         CommonModule,
@@ -41,7 +41,7 @@ export class RegisterComponent {
 
     constructor(
         private authService: AuthService,
-        private uploadService: UploadImgService,
+        private usersService: UsersService,
         private router: Router,
     ) {
         this.form = new FormGroup({
@@ -94,7 +94,7 @@ export class RegisterComponent {
      * Отправка аватара пользователя
      */
     pushAvatar() {
-        this.uploadService.uploadImg(this.selectedFile).subscribe({});
+        this.usersService.uploadImg(this.selectedFile).subscribe({});
     }
 
     /**

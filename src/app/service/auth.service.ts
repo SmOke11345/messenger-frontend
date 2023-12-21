@@ -50,8 +50,6 @@ export class AuthService {
         );
     }
 
-    // TODO: Сделать чтобы данные cookie а именно user_data, тоже менялись, при успешном изменение данных пользователя в profile.
-
     /**
      * Используется для установки полученных данных в cookie
      * @param response

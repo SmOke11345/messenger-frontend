@@ -10,7 +10,8 @@ import { catchError, throwError } from "rxjs";
 @Injectable({ providedIn: "root" })
 export class UsersService {
     private user_data = this.cookieService.get("user_data");
-    private user_id = JSON.parse(this.user_data).id;
+    // При переходе на страницу register была ошибка, JSON.parse => ee решение
+    private user_id = !this.user_data ? 0 : JSON.parse(this.user_data).id;
 
     constructor(
         private http: HttpClient,
@@ -57,11 +58,10 @@ export class UsersService {
     }
 
     /**
-     * Получение пользователя по имени или фамилии
      * На странице find-friends
+     * Получение пользователей по имени или фамилии
      * @param value
      */
-    //TODO: как то объединить похожие функции
     getSearchUsers(value: string) {
         return this.http
             .get<User[]>(`${UrlEnums.URL_USERS}/find-friends?q=${value}`)
@@ -73,7 +73,11 @@ export class UsersService {
             );
     }
 
-    //TODO: как то объединить похожие функции
+    /**
+     * На странице friends
+     * Получение друзей пользователя по имени или фамилии
+     * @param value
+     */
     getSearchFriends(value: string) {
         return this.http
             .get<User[]>(`${UrlEnums.URL_USERS}/friends?q=${value}`)
@@ -84,7 +88,12 @@ export class UsersService {
             );
     }
 
+    /**
+     * Изменение данных пользователя
+     * @param data
+     */
     patchProfile(data: User) {
+        console.log(data.password);
         return this.http
             .patch<User>(`${UrlEnums.URL_USERS}/profile/${this.user_id}`, data)
             .pipe(
@@ -92,5 +101,15 @@ export class UsersService {
                     return throwError(error);
                 }),
             );
+    }
+
+    /**
+     * Загрузка аватара пользователя
+     * @param file
+     */
+    uploadImg(file: File) {
+        const formData: FormData = new FormData();
+        formData.append("file", file);
+        return this.http.post(`${UrlEnums.URL_USERS}/upload`, formData);
     }
 }

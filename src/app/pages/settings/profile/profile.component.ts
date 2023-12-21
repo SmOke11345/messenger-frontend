@@ -21,6 +21,7 @@ import { UsersService } from "../../../service/users.service";
 })
 export class ProfileComponent {
     errors: string = "";
+    show: boolean = false;
 
     profileEdit: FormGroup;
 
@@ -44,11 +45,30 @@ export class ProfileComponent {
         });
     }
 
+    // TODO: Сделать проверку , чтобы не отправлять новый пароль если он не был изменен, аналогично с другими полями
+    // т.е нужно не добавлять не измененные поля формы при отправке запроса.
+
+    /**
+     * Отправка измененных данных
+     */
     onSubmit() {
         this.usersService
             .patchProfile({ ...this.profileEdit.value })
             .subscribe({
-                next: (response) => {},
+                next: (response) => {
+                    // Обновляем данные пользователя в cookie. P.S. думаю это можно сделать иначе.
+                    const update_data = {
+                        id: response.id,
+                        name: response.name,
+                        lastname: response.lastname,
+                        login: response.login,
+                        profile_img: response.profile_img,
+                    };
+                    this.cookieService.set(
+                        "user_data",
+                        JSON.stringify(update_data),
+                    );
+                },
                 error: (error) => {
                     this.errors = `${error.error.message}`;
                 },

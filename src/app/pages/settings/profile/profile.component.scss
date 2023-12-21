@@ -1,0 +1,17 @@
+@import "../../../app.component";
+
+.profile {
+    .btn--change {
+        margin-top: 10px;
+        width: 150px;
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        padding: 10px;
+        font-size: $font-p;
+
+        p {
+            margin-left: 10px;
+        }
+    }
+}

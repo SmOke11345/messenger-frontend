@@ -93,7 +93,6 @@ export class UsersService {
      * @param data
      */
     patchProfile(data: User) {
-        console.log(data.password);
         return this.http
             .patch<User>(`${UrlEnums.URL_USERS}/profile/${this.user_id}`, data)
             .pipe(

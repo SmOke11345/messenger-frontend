@@ -45,36 +45,49 @@ export class ProfileComponent {
         });
     }
 
-    // TODO: Сделать проверку , чтобы не отправлять новый пароль если он не был изменен, аналогично с другими полями
-    // т.е нужно не добавлять не измененные поля формы при отправке запроса.
+    /**
+     * Установка новых данных в cookie
+     * @param response
+     */
+    setNewCookie(response: any) {
+        const update_data = {
+            id: response.id,
+            name: response.name,
+            lastname: response.lastname,
+            login: response.login,
+            profile_img: response.profile_img,
+        };
+
+        this.cookieService.set("user_data", JSON.stringify(update_data), {
+            expires: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+            sameSite: "Strict",
+        });
+    }
 
     /**
      * Отправка измененных данных
      */
     onSubmit() {
-        this.usersService
-            .patchProfile({ ...this.profileEdit.value })
-            .subscribe({
-                next: (response) => {
-                    // Обновляем данные пользователя в cookie. P.S. думаю это можно сделать иначе.
-                    const update_data = {
-                        id: response.id,
-                        name: response.name,
-                        lastname: response.lastname,
-                        login: response.login,
-                        profile_img: response.profile_img,
-                    };
-                    this.cookieService.set(
-                        "user_data",
-                        JSON.stringify(update_data),
-                    );
-                },
-                error: (error) => {
-                    this.errors = `${error.error.message}`;
-                },
-                complete: () => {
-                    this.router.navigate(["/settings"]);
-                },
-            });
+        const formFieldTouched = {}; // Создаем новый объект для хранения измененных данных
+        for (const control in this.profileEdit.controls) {
+            // Если с полем было совершено событие touched, то отправляем значение controls в объект
+            if (this.profileEdit.controls[control].touched) {
+                // @ts-ignore TODO: В дальнейшем исправить тип
+                formFieldTouched[control] = this.profileEdit.value[control];
+            }
+        }
+
+        this.usersService.patchProfile(formFieldTouched as User).subscribe({
+            next: (response) => {
+                // Обновляем данные пользователя в cookie. P.S. думаю это можно сделать иначе.
+                this.setNewCookie(response);
+            },
+            error: (error) => {
+                this.errors = `${error.error.message}`;
+            },
+            complete: () => {
+                this.router.navigate(["/settings"]);
+            },
+        });
     }
 }

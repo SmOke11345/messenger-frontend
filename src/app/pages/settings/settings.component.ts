@@ -9,6 +9,7 @@ import { User } from "../../models/UserTypes";
     selector: "app-settings",
     standalone: true,
     imports: [CommonModule, RouterLink],
+    providers: [CookieService],
     templateUrl: "./settings.component.html",
     styleUrl: "./settings.component.scss",
 })
@@ -27,8 +28,7 @@ export class SettingsComponent implements OnInit {
      * Удаление токена из cookie
      */
     exit() {
-        this.cookieService.delete("access_token");
-        this.cookieService.delete("user_data");
+        this.cookieService.deleteAll();
         this.router.navigate(["/login"]);
     }
 }

@@ -17,19 +17,27 @@ import { FormsModule } from "@angular/forms";
 export class FindFriendsComponent implements OnInit {
     usersData: User[] = [];
     enableButton: boolean = true;
+    loading: boolean;
 
     error: string = "";
     value: string = "";
 
-    constructor(private usersService: UsersService, private router: Router) {}
+    constructor(private usersService: UsersService, private router: Router) {
+        this.loading = true;
+    }
 
     /**
      * Получение всех пользователей после инициализации страницы
      */
     ngOnInit() {
-        this.usersService
-            .getAllUsers()
-            .subscribe((data) => (this.usersData = data));
+        this.usersService.getAllUsers().subscribe({
+            next: (data) => {
+                this.usersData = data;
+            },
+            complete: () => {
+                setTimeout(() => (this.loading = false), 400);
+            },
+        });
     }
 
     Search(value: string) {
@@ -37,6 +45,7 @@ export class FindFriendsComponent implements OnInit {
     }
 
     getSearchUsers() {
+        this.loading = true;
         this.usersService.getSearchUsers(this.value).subscribe({
             next: (data) => {
                 this.usersData = data;
@@ -49,6 +58,7 @@ export class FindFriendsComponent implements OnInit {
             },
             complete: () => {
                 this.error = "";
+                setTimeout(() => (this.loading = false), 400);
             },
         });
     }

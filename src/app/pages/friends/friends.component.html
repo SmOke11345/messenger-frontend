@@ -41,11 +41,14 @@
             <div *ngIf="error">
                 {{ error }}
             </div>
-            <card-user
-                *ngFor="let userData of friendsData"
-                [enableButton]="enableButton"
-                [userData]="userData">
-            </card-user>
+            <div *ngIf="loading">Loading...🐼</div>
+            <div *ngIf="!loading" class="friends__grid">
+                <card-user
+                    *ngFor="let userData of friendsData"
+                    [enableButton]="enableButton"
+                    [userData]="userData">
+                </card-user>
+            </div>
         </div>
     </div>
 </section>

@@ -26,11 +26,14 @@ export class FriendsComponent implements OnInit {
     friendsData: User[] = [];
     enableButton: boolean = false;
     showSearch: boolean = true;
+    loading: boolean;
 
     error: string = "";
     value: string = "";
 
-    constructor(private usersService: UsersService, private router: Router) {}
+    constructor(private usersService: UsersService, private router: Router) {
+        this.loading = true;
+    }
 
     /**
      * Получение друзей после перехода на страницу.
@@ -46,6 +49,9 @@ export class FriendsComponent implements OnInit {
                 this.error = error.error.message;
                 console.log(error);
             },
+            complete: () => {
+                setTimeout(() => (this.loading = false), 400);
+            },
         });
     }
 
@@ -54,6 +60,7 @@ export class FriendsComponent implements OnInit {
     }
 
     getSearchFriends(value: string) {
+        this.loading = true;
         return this.usersService.getSearchFriends(value).subscribe({
             next: (data) => {
                 this.friendsData = data;
@@ -64,6 +71,7 @@ export class FriendsComponent implements OnInit {
             },
             complete: () => {
                 this.error = "";
+                setTimeout(() => (this.loading = false), 400);
             },
         });
     }

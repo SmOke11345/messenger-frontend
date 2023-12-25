@@ -8,6 +8,7 @@ import {
 } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+
 import { User } from "../../../models/UserTypes";
 import { UsersService } from "../../../service/users.service";
 
@@ -41,6 +42,7 @@ export class ProfileComponent {
                 Validators.required,
                 Validators.minLength(6),
             ]),
+            // TODO: Добавить изменение изображения profile_img.
             profile_img: new FormControl(user.profile_img),
         });
     }

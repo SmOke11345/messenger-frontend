@@ -59,6 +59,7 @@ export class AuthService {
         const expires = response.data.cookie.expires;
         // Получаем данные
         const response_data = response.data.passport.user;
+
         // Добавляем только те которые нам нужны
         const user_data = {
             id: response_data.id,

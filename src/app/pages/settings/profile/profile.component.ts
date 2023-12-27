@@ -21,7 +21,7 @@ import { UsersService } from "../../../service/users.service";
     styleUrl: "./profile.component.scss",
 })
 export class ProfileComponent {
-    errors: string = "";
+    errors: string[] = [];
     show: boolean = false;
 
     profileEdit: FormGroup;
@@ -70,11 +70,10 @@ export class ProfileComponent {
      * Отправка измененных данных
      */
     onSubmit() {
-        const formFieldTouched = {}; // Создаем новый объект для хранения измененных данных
+        const formFieldTouched: { [key: string]: any } = {}; // Создаем новый объект для хранения измененных данных
         for (const control in this.profileEdit.controls) {
             // Если с полем было совершено событие touched, то отправляем значение controls в объект
             if (this.profileEdit.controls[control].touched) {
-                // @ts-ignore TODO: В дальнейшем исправить тип
                 formFieldTouched[control] = this.profileEdit.value[control];
             }
         }
@@ -85,7 +84,7 @@ export class ProfileComponent {
                 this.setNewCookie(response);
             },
             error: (error) => {
-                this.errors = `${error.error.message}`;
+                this.errors = [`${error.error.message}`];
             },
             complete: () => {
                 this.router.navigate(["/settings"]);

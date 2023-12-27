@@ -38,8 +38,10 @@
                     placeholder="Search"
                     type="text" />
             </div>
-            <div *ngIf="error">
-                {{ error }}
+            <div *ngIf="errors">
+                <span *ngFor="let error of errors" class="error">
+                    {{ error }}
+                </span>
             </div>
             <div *ngIf="loading">Loading...🐼</div>
             <div *ngIf="!loading" class="friends__grid">

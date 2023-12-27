@@ -28,7 +28,7 @@ export class FriendsComponent implements OnInit {
     showSearch: boolean = true;
     loading: boolean;
 
-    error: string = "";
+    errors: string[] = [];
     value: string = "";
 
     constructor(private usersService: UsersService, private router: Router) {
@@ -46,8 +46,7 @@ export class FriendsComponent implements OnInit {
                 this.friendsData = data;
             },
             error: (error) => {
-                this.error = error.error.message;
-                console.log(error);
+                this.errors = [`${error.error.message}`];
             },
             complete: () => {
                 setTimeout(() => (this.loading = false), 400);
@@ -66,11 +65,12 @@ export class FriendsComponent implements OnInit {
                 this.friendsData = data;
             },
             error: (error) => {
+                this.loading = false;
                 this.friendsData = [];
-                this.error = error.error.message;
+                this.errors = [`${error.error.message}`];
             },
             complete: () => {
-                this.error = "";
+                this.errors = [];
                 setTimeout(() => (this.loading = false), 400);
             },
         });

@@ -29,9 +29,8 @@ export class CardUserComponent {
      * @param id
      */
     addFriend(id: number) {
-        this.usersService.addFriend(id).subscribe((response) => {
+        this.usersService.addFriend(id).subscribe(() => {
             this.disable = true;
-            console.log("Добавлен", response);
         });
     }
 
@@ -40,9 +39,8 @@ export class CardUserComponent {
      * @param id
      */
     deleteFriend(id: number) {
-        this.usersService.deleteFriend(id).subscribe((response) => {
+        this.usersService.deleteFriend(id).subscribe(() => {
             this.disable = true;
-            console.log("Удален", response);
         });
     }
 }

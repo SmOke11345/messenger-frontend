@@ -37,18 +37,15 @@ export class LoginComponent {
 
     changeShow() {
         this.show = !this.show;
-        if (this.inputType == "password") {
-            this.inputType = "text";
-        } else {
-            this.inputType = "password";
-        }
+        this.inputType == "password"
+            ? (this.inputType = "text")
+            : (this.inputType = "password");
     }
 
     onSubmit() {
         this.authService.login({ ...this.form.value }).subscribe({
             // Обрабатываем полученные из service ошибки и выводим их
             error: (error) => {
-                console.log(error);
                 this.errors = [`${error.error.message}`];
             },
         });

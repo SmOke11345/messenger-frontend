@@ -118,7 +118,6 @@ export class RegisterComponent {
                     console.log("users create successfully", response);
                 },
                 error: (error) => {
-                    console.log(error);
                     this.errors = [`${error.error.message}`];
                     // toast возникла ошибка при отправке данных
                 },

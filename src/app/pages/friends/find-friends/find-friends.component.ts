@@ -19,7 +19,7 @@ export class FindFriendsComponent implements OnInit {
     enableButton: boolean = true;
     loading: boolean;
 
-    error: string = "";
+    errors: string[] = [];
     value: string = "";
 
     constructor(private usersService: UsersService, private router: Router) {
@@ -49,15 +49,14 @@ export class FindFriendsComponent implements OnInit {
         this.usersService.getSearchUsers(this.value).subscribe({
             next: (data) => {
                 this.usersData = data;
-                console.log(data);
             },
             error: (error) => {
+                this.loading = false;
                 this.usersData = [];
-                this.error = error.error.message;
-                console.log(error);
+                this.errors = [`${error.error.message}`];
             },
             complete: () => {
-                this.error = "";
+                this.errors = [];
                 setTimeout(() => (this.loading = false), 400);
             },
         });

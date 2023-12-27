@@ -20,7 +20,9 @@
         <form (ngSubmit)="onSubmit()" [formGroup]="profileEdit" class="form">
             <div class="form__top">
                 <div *ngIf="errors">
-                    <div class="error">{{ errors }}</div>
+                    <span *ngFor="let error of errors" class="error">
+                        {{ error }}
+                    </span>
                 </div>
             </div>
             <div class="form__body">

@@ -120,15 +120,25 @@
     background-color: $green;
 }
 
-.wrapper {
-    align-items: baseline;
+.find-friends,
+.friends,
+.profile {
+    .wrapper {
+        align-items: baseline;
+        margin-bottom: 15px;
+    }
+}
 
+.settings,
+.chats {
     .title {
         margin-bottom: 20px;
+    }
+}
 
-        h2 {
-            font-size: calc(#{$font-h} - 6px);
-        }
+.title {
+    h2 {
+        font-size: calc(#{$font-h} - 6px);
     }
 }
 

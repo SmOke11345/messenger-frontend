@@ -3,11 +3,12 @@ import { CommonModule, NgOptimizedImage } from "@angular/common";
 
 import { User } from "../../models/UserTypes";
 import { UsersService } from "../../service/users.service";
+import { RouterLink } from "@angular/router";
 
 @Component({
     selector: "card-user",
     standalone: true,
-    imports: [CommonModule, NgOptimizedImage],
+    imports: [CommonModule, NgOptimizedImage, RouterLink],
     providers: [UsersService],
     templateUrl: "./card-user.component.html",
     styleUrl: "./card-user.component.scss",

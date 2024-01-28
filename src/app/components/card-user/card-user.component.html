@@ -27,8 +27,8 @@
         </div>
         <div class="card__name">
             <p>{{ userData.name }} {{ userData?.lastname }}</p>
+            <a [routerLink]="['/chats', userData.id]">Write message</a>
         </div>
-        <div class="card__user_id">{{ "@" + userData.id }}</div>
     </div>
     <!--TODO: Сделать отображение статуса активности, "онлайн не онлайн и т.п."-->
     <div *ngIf="enableButton">

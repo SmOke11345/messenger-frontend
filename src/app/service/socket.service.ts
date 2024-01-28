@@ -1,14 +1,49 @@
 import { Injectable } from "@angular/core";
+import { Observable, Observer } from "rxjs";
 import { io } from "socket.io-client";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class SocketService {
-    private readonly socket = io("http://localhost:3000");
+    socket: any;
 
-    // Просто для примера работы сокета.
+    constructor() {
+        this.socket = io("http://localhost:3000");
+    }
+
+    /**
+     * Подключение сокета.
+     */
     connect() {
         this.socket.on("connect", () => {
             console.log("connected");
         });
+    }
+
+    /**
+     * Отключение от сокета при переходе на другую страницу.
+     */
+    disconnect() {
+        this.socket.disconnect();
+        console.log("disconnected");
+    }
+
+    /**
+     * Получение сообщений.
+     */
+    getMessages() {
+        return new Observable((observer: Observer<any>) => {
+            this.socket.on("onMessage", (data: string) => {
+                console.log(data);
+                observer.next(data);
+            });
+        });
+    }
+
+    /**
+     * Отправка сообщений.
+     * @param message
+     */
+    sendMessage(message: string) {
+        return this.socket.emit("newMessage", message);
     }
 }

@@ -31,6 +31,7 @@ export class UsersService {
      * Получение списка контактов пользователя
      */
     getFriends() {
+        console.log("hello");
         return this.http
             .get<User[]>(`${UrlEnums.URL_FRIENDS}/${this.user_id}`)
             .pipe(

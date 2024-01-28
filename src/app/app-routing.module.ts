@@ -54,6 +54,14 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: `${PathEnum.PATH_CHATS}/:id`,
+                title: "Chat",
+                loadComponent: () =>
+                    import("./pages/chats/chat/chat.component").then(
+                        (m) => m.ChatComponent,
+                    ),
+            },
+            {
                 path: PathEnum.PATH_FRIENDS,
                 title: "Friends",
                 loadComponent: () =>
@@ -96,6 +104,5 @@ export const routes: Routes = [
 @NgModule({
     providers: [AuthGuard, AuthService, UsersService],
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
 })
 export class AppRoutingModule {}

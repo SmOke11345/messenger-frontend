@@ -49,15 +49,15 @@ export const routes: Routes = [
                 title: "Chats",
                 // Чтобы страница не загружалась сразу
                 loadComponent: () =>
-                    import("./pages/chats/chats.component").then(
-                        (m) => m.ChatsComponent,
+                    import("./pages/messages/messages.component").then(
+                        (m) => m.MessagesComponent,
                     ),
             },
             {
                 path: `${PathEnum.PATH_CHATS}/:id`,
                 title: "Chat",
                 loadComponent: () =>
-                    import("./pages/chats/chat/chat.component").then(
+                    import("./pages/messages/chat/chat.component").then(
                         (m) => m.ChatComponent,
                     ),
             },

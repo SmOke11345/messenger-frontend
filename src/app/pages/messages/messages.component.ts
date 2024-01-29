@@ -7,8 +7,8 @@ import { NavComponent } from "../../components/nav/nav.component";
 @Component({
     selector: "messenger-chats",
     standalone: true,
-    templateUrl: "./chats.component.html",
-    styleUrls: ["./chats.component.scss"],
+    templateUrl: "./messages.component.html",
+    styleUrls: ["./messages.component.scss"],
     imports: [RouterOutlet, NgIf, NavComponent, NgForOf],
 })
-export class ChatsComponent {}
+export class MessagesComponent {}

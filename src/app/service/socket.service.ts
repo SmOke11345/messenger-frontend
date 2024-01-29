@@ -33,7 +33,6 @@ export class SocketService {
     getMessages() {
         return new Observable((observer: Observer<any>) => {
             this.socket.on("onMessage", (data: string) => {
-                console.log(data);
                 observer.next(data);
             });
         });

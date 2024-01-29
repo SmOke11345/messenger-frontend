@@ -42,7 +42,6 @@ export class ProfileComponent {
                 Validators.required,
                 Validators.minLength(6),
             ]),
-            // TODO: Добавить изменение изображения profile_img.
             profile_img: new FormControl(user.profile_img),
         });
     }

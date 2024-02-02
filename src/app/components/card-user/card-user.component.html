@@ -27,6 +27,7 @@
         </div>
         <div class="card__name">
             <p>{{ userData.name }} {{ userData?.lastname }}</p>
+            <!--TODO: Сделать после нажатия создание комнаты для чата или переход по id комнаты-->
             <a [routerLink]="['/chats', userData.id]">Write message</a>
         </div>
     </div>

@@ -5,4 +5,5 @@ export enum UrlEnums {
     URL_LOGIN = `${Host}/auth/login`,
     URL_USERS = `${Host}/users`,
     URL_FRIENDS = `${Host}/users/friends`,
+    URL_CHATS = `${Host}/chats`,
 }

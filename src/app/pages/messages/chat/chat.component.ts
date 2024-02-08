@@ -18,12 +18,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     private SubRouter: Subscription;
     private id: number | undefined;
 
-    // Просто для примера работы сокета.
-    // Должно происходить соединение при нажатии на пользователя, тем самым передавать его id и свое в комнату.
-
     constructor(
         private socketService: SocketService,
-        // private chatService: ChatsService,
+        private chatsService: ChatsService,
         private router: ActivatedRoute,
     ) {
         // Получение id из роута.
@@ -33,10 +30,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.socketService.connect();
         // TODO: при подключении, нужно будет получать сообщения из базы данных
-        this.socketService.getMessages().subscribe((data) => {
-            this.messages.push(data);
+        this.chatsService.createOrGetChat(this.id).subscribe((data: any) => {
+            this.socketService
+                .getMessages(data.id)
+                .subscribe((data: string) => {
+                    this.messages.push(data);
+                });
         });
     }
 
@@ -52,8 +52,9 @@ export class ChatComponent implements OnInit, OnDestroy {
      * Отправка сообщений.
      */
     sendMessage() {
-        // Отправлять данные в базу данных.
-        this.socketService.sendMessage("how are you?");
-        // this.chatService.sendMessage("how are you?", this.id);
+        this.chatsService.createOrGetChat(this.id).subscribe((data: any) => {
+            this.socketService.sendMessage("content", data.id.toString());
+        });
+        // TODO: Отправлять данные в базу данных.
     }
 }

@@ -6,32 +6,36 @@ import { io } from "socket.io-client";
 export class SocketService {
     socket: any;
 
+    // TODO: логика пока что сходиться к тому, что нужно подключать пользователя каждый раз к комнате , для получения сообщений и отправке и т.д. P.S Пока что нашел только такой выход, скорее всего можно сделать как-то проще.
+
+    // TODO: Сделать отправление сообщений в базу данных. Их отображение при подключении к комнате.
     constructor() {
         this.socket = io("http://localhost:3000");
-    }
-
-    /**
-     * Подключение сокета.
-     */
-    connect() {
-        this.socket.on("connect", () => {
-            console.log("connected");
-        });
     }
 
     /**
      * Отключение от сокета при переходе на другую страницу.
      */
     disconnect() {
-        this.socket.disconnect();
-        console.log("disconnected");
+        if (this.socket) {
+            this.socket.disconnect();
+        }
+    }
+
+    /**
+     * Подключение к чату.
+     * @param id
+     */
+    joinChat(id: string) {
+        this.socket.emit("joinChat", id);
     }
 
     /**
      * Получение сообщений.
      */
-    getMessages() {
+    getMessages(chatId: string) {
         return new Observable((observer: Observer<any>) => {
+            this.joinChat(chatId);
             this.socket.on("onMessage", (data: string) => {
                 observer.next(data);
             });
@@ -40,9 +44,14 @@ export class SocketService {
 
     /**
      * Отправка сообщений.
-     * @param message
+     * @param content
+     * @param chatId
      */
-    sendMessage(message: string) {
-        return this.socket.emit("newMessage", message);
+    sendMessage(content: string, chatId: string) {
+        this.socket.emit("joinChat", chatId);
+        this.socket.emit("newMessage", {
+            content,
+            chatId,
+        });
     }
 }

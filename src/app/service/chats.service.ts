@@ -16,11 +16,20 @@ export class ChatsService {
      * Добавление сообщений в базу данных.
      * @param content
      * @param id
+     * @param chatId
      */
     // TODO: Добавить chatId
-    sendMessage(content: string, id: number | undefined) {
+    sendMessage(content: string, id: number | undefined, chatId: string) {
         return this.http.post(`${UrlEnums.URL_CHATS}/${id}`, {
             content,
+            chatId,
         });
+    }
+
+    createOrGetChat(friendId: number | undefined) {
+        return this.http.post(
+            `${UrlEnums.URL_CHATS}/create-or-get-chat/${friendId}`,
+            {},
+        );
     }
 }

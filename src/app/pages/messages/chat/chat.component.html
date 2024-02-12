@@ -1,4 +1,9 @@
 <div *ngFor="let message of messages">
-    {{ message }}
+    {{ message.content }}
+    <!--    TODO: Добавить стили-->
+    <p>
+        {{ message.createdAt | date: "HH:mm" }}
+    </p>
 </div>
+<!-- TODO: Добавить инпут для ввода сообщений-->
 <button (click)="sendMessage()">Send</button>

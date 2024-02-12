@@ -85,6 +85,12 @@
             color: $primary-color;
         }
     }
+
+    &--send-message {
+        color: $text-color;
+        padding: 0;
+        font-size: calc(#{$font-p});
+    }
 }
 
 @media screen and (max-width: 320px) {

@@ -13,13 +13,13 @@ import { CookieService } from "ngx-cookie-service";
     imports: [RouterOutlet, CommonModule, HttpClientModule],
 })
 export class AppComponent implements OnInit {
-    constructor(private router: Router, private cookieService: CookieService) {}
+    // constructor(private router: Router, private cookieService: CookieService) {}
 
     // TODO: работает, только как мне кажется не там где нужно
     ngOnInit() {
-        const token = this.cookieService.check("access_token");
-        if (token) {
-            this.router.navigate(["/chats"]);
-        }
+        // const token = this.cookieService.check("access_token");
+        // if (token) {
+        //     this.router.navigate(["/chats"]);
+        // }
     }
 }

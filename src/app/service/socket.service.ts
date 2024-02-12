@@ -1,15 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Observable, Observer } from "rxjs";
 import { io } from "socket.io-client";
+import { CookieService } from "ngx-cookie-service";
 
 @Injectable({ providedIn: "root" })
 export class SocketService {
     socket: any;
 
-    // TODO: логика пока что сходиться к тому, что нужно подключать пользователя каждый раз к комнате , для получения сообщений и отправке и т.д. P.S Пока что нашел только такой выход, скорее всего можно сделать как-то проще.
-
-    // TODO: Сделать отправление сообщений в базу данных. Их отображение при подключении к комнате.
-    constructor() {
+    constructor(private cookieService: CookieService) {
         this.socket = io("http://localhost:3000");
     }
 
@@ -48,8 +46,10 @@ export class SocketService {
      * @param chatId
      */
     sendMessage(content: string, chatId: string) {
-        this.socket.emit("joinChat", chatId);
+        const senderId = this.cookieService.get("user_data"); // Получение id пользователя из cookie
+
         this.socket.emit("newMessage", {
+            senderId: JSON.parse(senderId).id,
             content,
             chatId,
         });

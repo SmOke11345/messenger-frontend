@@ -1,22 +1,23 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { NgForOf } from "@angular/common";
+import { DatePipe, NgForOf } from "@angular/common";
 import { SocketService } from "../../../service/socket.service";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ChatsService } from "../../../service/chats.service";
+import { MessagesType } from "../../../models/messagesTypes";
 
 @Component({
     selector: "app-chat",
     standalone: true,
-    imports: [NgForOf],
+    imports: [NgForOf, DatePipe],
     providers: [SocketService, ChatsService],
     templateUrl: "./chat.component.html",
     styleUrl: "./chat.component.scss",
 })
 export class ChatComponent implements OnInit, OnDestroy {
-    messages: string[] = [];
+    messages: MessagesType[] = [];
     private SubRouter: Subscription;
-    private id: number | undefined;
+    private id: string = "";
 
     constructor(
         private socketService: SocketService,
@@ -31,13 +32,21 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         // TODO: при подключении, нужно будет получать сообщения из базы данных
-        this.chatsService.createOrGetChat(this.id).subscribe((data: any) => {
-            this.socketService
-                .getMessages(data.id)
-                .subscribe((data: string) => {
-                    this.messages.push(data);
-                });
-        });
+        this.chatsService
+            .createOrGetChat(this.id)
+            .subscribe((data: { id: string }) => {
+                this.chatsService
+                    .getMessages(data.id.toString())
+                    .subscribe((data: MessagesType[]) => {
+                        this.messages.push(...data);
+                    });
+                this.socketService
+                    .getMessages(data.id.toString())
+                    .subscribe((data) => {
+                        console.log(this.messages);
+                        this.messages.push(data);
+                    });
+            });
     }
 
     /**
@@ -52,9 +61,14 @@ export class ChatComponent implements OnInit, OnDestroy {
      * Отправка сообщений.
      */
     sendMessage() {
-        this.chatsService.createOrGetChat(this.id).subscribe((data: any) => {
-            this.socketService.sendMessage("content", data.id.toString());
-        });
-        // TODO: Отправлять данные в базу данных.
+        this.chatsService
+            .createOrGetChat(this.id)
+            .subscribe((data: { id: string }) => {
+                this.chatsService
+                    .sendMessage("content", data.id.toString())
+                    // TODO: Обрабатывать ошибки.
+                    .subscribe();
+                this.socketService.sendMessage("content", data.id.toString());
+            });
     }
 }

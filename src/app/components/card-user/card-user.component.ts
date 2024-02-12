@@ -55,9 +55,9 @@ export class CardUserComponent {
      * Создание-получение чата.
      * @param friendId
      */
-    createOrGetChat(friendId: number) {
+    createOrGetChat(friendId?: string) {
         this.chatsService.createOrGetChat(friendId).subscribe((data: any) => {
-            this.socketService.joinChat(data.id.toString());
+            this.socketService.joinChat(data.id);
         });
     }
 }

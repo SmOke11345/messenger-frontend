@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { UrlEnums } from "../models/Enums/UrlEnums";
+import { MessagesType, SendMessageType } from "../models/messagesTypes";
 
 @Injectable({
     providedIn: "root",
@@ -8,28 +9,36 @@ import { UrlEnums } from "../models/Enums/UrlEnums";
 export class ChatsService {
     constructor(private http: HttpClient) {}
 
-    // TODO: нужно узнать как создавать комнаты (rooms) для обмена сообщений между пользователями,
-    // также нужно узнать как создать уникальных id комнаты.
-    // Если один пользователь хочет создать комнату, он нажимает на кнопку и подключает себя и другого пользователя к комнате.
+    // TODO: Если один пользователь хочет создать комнату, он нажимает на кнопку и подключает себя и другого пользователя к комнате.
 
     /**
      * Добавление сообщений в базу данных.
      * @param content
-     * @param id
      * @param chatId
      */
-    // TODO: Добавить chatId
-    sendMessage(content: string, id: number | undefined, chatId: string) {
-        return this.http.post(`${UrlEnums.URL_CHATS}/${id}`, {
-            content,
-            chatId,
-        });
+    sendMessage(content: string, chatId: string | undefined) {
+        return this.http.post<SendMessageType>(
+            `${UrlEnums.URL_CHATS}/send-message`,
+            {
+                content,
+                chatId,
+            },
+        );
     }
 
-    createOrGetChat(friendId: number | undefined) {
-        return this.http.post(
+    getMessages(chatId: string) {
+        return this.http.get<MessagesType[]>(
+            `${UrlEnums.URL_CHATS}/get-messages/${chatId}`,
+        );
+    }
+
+    /**
+     * Создание-получение чата.
+     * @param friendId
+     */
+    createOrGetChat(friendId?: string) {
+        return this.http.get<{ id: string }>(
             `${UrlEnums.URL_CHATS}/create-or-get-chat/${friendId}`,
-            {},
         );
     }
 }

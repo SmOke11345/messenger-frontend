@@ -1,14 +1,14 @@
 <div class="card">
     <div class="wrapper">
         <div class="card__img">
-            <div *ngIf="userData?.profile_img">
+            <div *ngIf="userData.profile_img">
                 <img
-                    [src]="userData?.profile_img"
+                    [src]="userData.profile_img"
                     alt=""
                     height="48px"
                     width="48px" />
             </div>
-            <div *ngIf="!userData?.profile_img" class="no_img">
+            <div *ngIf="!userData.profile_img" class="no_img">
                 <svg
                     fill="none"
                     height="47"
@@ -26,11 +26,12 @@
             </div>
         </div>
         <div class="card__name">
-            <p>{{ userData.name }} {{ userData?.lastname }}</p>
+            <p>{{ userData.name }} {{ userData.lastname }}</p>
             <!--TODO: Сделать после нажатия создание комнаты для чата или переход по id комнаты-->
             <button
-                (click)="createOrGetChat(userData.id)"
-                [routerLink]="['/chats', userData.id]">
+                (click)="createOrGetChat(userData.id.toString())"
+                [routerLink]="['/chats', userData.id]"
+                class="btn--send-message">
                 Write message
             </button>
         </div>

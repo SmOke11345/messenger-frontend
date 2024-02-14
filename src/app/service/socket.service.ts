@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, Observer } from "rxjs";
 import { io } from "socket.io-client";
 import { CookieService } from "ngx-cookie-service";
+import { MessagesType } from "../models/messagesTypes";
 
 @Injectable({ providedIn: "root" })
 export class SocketService {
@@ -34,7 +35,7 @@ export class SocketService {
     getMessages(chatId: string) {
         return new Observable((observer: Observer<any>) => {
             this.joinChat(chatId);
-            this.socket.on("onMessage", (data: string) => {
+            this.socket.on("onMessage", (data: MessagesType) => {
                 observer.next(data);
             });
         });
@@ -46,10 +47,10 @@ export class SocketService {
      * @param chatId
      */
     sendMessage(content: string, chatId: string) {
-        const senderId = this.cookieService.get("user_data"); // Получение id пользователя из cookie
+        const senderId = JSON.parse(this.cookieService.get("user_data")).id; // Получение id пользователя из cookie
 
         this.socket.emit("newMessage", {
-            senderId: JSON.parse(senderId).id,
+            senderId,
             content,
             chatId,
         });

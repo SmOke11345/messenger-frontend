@@ -1,0 +1,52 @@
+@import "../../../app.component";
+
+.chat {
+    // TODO: Пока что так.
+    margin: 50px 0 135px 0;
+    overflow: scroll;
+}
+
+.chat-grid {
+    display: grid;
+    row-gap: 10px;
+}
+
+.message.message-friend {
+    justify-self: end;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ededed;
+    width: max-content;
+
+    &__item {
+        margin-bottom: 5px;
+    }
+
+    &__time {
+        font-size: calc(#{$font-p - 2px});
+    }
+}
+
+.send-message {
+    position: fixed;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    margin: 0 10px;
+
+    &--wrap {
+        display: flex;
+        justify-content: space-between;
+
+        .chat-field {
+            width: 100%;
+            padding: 15px 0 15px 10px;
+            border-radius: 10px;
+            font-size: $font-p;
+            border: 2px solid #f7f7fc;
+        }
+    }
+}

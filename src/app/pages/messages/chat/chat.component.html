@@ -1,9 +1,31 @@
-<div *ngFor="let message of messages">
-    {{ message.content }}
-    <!--    TODO: Добавить стили-->
-    <p>
-        {{ message.createdAt | date: "HH:mm" }}
-    </p>
-</div>
-<!-- TODO: Добавить инпут для ввода сообщений-->
-<button (click)="sendMessage()">Send</button>
+<section class="chat">
+    <div class="container">
+        <div class="chat-grid">
+            <div
+                *ngFor="let message of messages"
+                [ngClass]="{
+                    'message-friend': message.senderId !== userId
+                }"
+                class="message">
+                <div class="message__item">
+                    {{ message.content }}
+                </div>
+                <div class="message__time">
+                    {{ message.createdAt | date: "HH:mm" }}
+                </div>
+            </div>
+        </div>
+        <div class="send-message">
+            <div class="send-message--wrap">
+                <input
+                    (keyup.enter)="sendMessage()"
+                    [(ngModel)]="content"
+                    class="chat-field"
+                    placeholder="Write a message...🐼"
+                    type="text" />
+                <!--  TODO: Добавить иконку для отправки сообщения-->
+                <button (click)="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</section>

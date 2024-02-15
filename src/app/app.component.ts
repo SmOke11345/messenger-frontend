@@ -13,13 +13,27 @@ import { CookieService } from "ngx-cookie-service";
     imports: [RouterOutlet, CommonModule, HttpClientModule],
 })
 export class AppComponent implements OnInit {
-    // constructor(private router: Router, private cookieService: CookieService) {}
+    constructor(
+        private router: Router,
+        private cookieService: CookieService,
+    ) {}
 
-    // TODO: работает, только как мне кажется не там где нужно
     ngOnInit() {
-        // const token = this.cookieService.check("access_token");
-        // if (token) {
-        //     this.router.navigate(["/chats"]);
-        // }
+        const token = this.cookieService.check("access_token");
+
+        if (token) {
+            // TODO: Получить путь, добавить его в куки, при подключении переходить по значению их куки.
+            // this.router.events.subscribe((nav) => {
+            //     if (nav instanceof NavigationEnd) {
+            //         this.cookieService.set("path", nav.url, {
+            //             expires: new Date(
+            //                 new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
+            //             ),
+            //             sameSite: "Strict",
+            //         });
+            //     }
+            // });
+            // this.router.navigate(JSON.parse(this.cookieService.get("path")));
+        }
     }
 }

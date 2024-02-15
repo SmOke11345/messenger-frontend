@@ -37,7 +37,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngOnInit() {
-        // TODO: при подключении, нужно будет получать сообщения из базы данных
         this.chatsService
             .createOrGetChat(this.id)
             .subscribe((data: { id: string }) => {
@@ -54,10 +53,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             });
     }
 
-    // Действия происходят после получения доступа к DOM
+    // Действия происходят после получения доступа к DOM.
     ngAfterViewInit() {
-        // TODO: Сделать прокрутку в конец страницы.
-        window.scrollTo(0, document.body.offsetHeight);
+        // Прокрутка страницы вниз.
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+        }, 300);
     }
 
     /**
@@ -79,7 +80,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     .sendMessage(this.content, data.id.toString())
                     // TODO: Обрабатывать ошибки.
                     .subscribe();
-                // TODO: Сделать чтобы нельзя было отправлять пустые сообщения, именно в сокет.
+                if (!this.content) return; // Если поле сообщение пустое.
                 this.socketService.sendMessage(
                     this.content,
                     data.id.toString(),

@@ -6,11 +6,6 @@
     //overflow-y: scroll;
 }
 
-.chat-grid {
-    display: grid;
-    row-gap: 10px;
-}
-
 .message.message-friend {
     justify-self: end;
 }

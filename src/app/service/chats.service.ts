@@ -2,14 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { UrlEnums } from "../models/Enums/UrlEnums";
 import { MessagesType, SendMessageType } from "../models/messagesTypes";
+import { chatType } from "../models/chatsTypes";
 
 @Injectable({
     providedIn: "root",
 })
 export class ChatsService {
     constructor(private http: HttpClient) {}
-
-    // TODO: Если один пользователь хочет создать комнату, он нажимает на кнопку и подключает себя и другого пользователя к комнате.
 
     /**
      * Добавление сообщений в базу данных.
@@ -26,6 +25,10 @@ export class ChatsService {
         );
     }
 
+    /**
+     * Получение сообщений.
+     * @param chatId
+     */
     getMessages(chatId: string) {
         return this.http.get<MessagesType[]>(
             `${UrlEnums.URL_CHATS}/get-messages/${chatId}`,
@@ -40,5 +43,12 @@ export class ChatsService {
         return this.http.get<{ id: string }>(
             `${UrlEnums.URL_CHATS}/create-or-get-chat/${friendId}`,
         );
+    }
+
+    /**
+     * Получение всех чатов.
+     */
+    getAllChats() {
+        return this.http.get<chatType[]>(`${UrlEnums.URL_CHATS}/get-all-chats`);
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, RouterOutlet } from "@angular/router";
+import { NavigationEnd, Router, RouterOutlet } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 
@@ -11,6 +11,7 @@ import { CookieService } from "ngx-cookie-service";
     template: "<router-outlet></router-outlet>",
     styleUrls: ["./app.component.scss"],
     imports: [RouterOutlet, CommonModule, HttpClientModule],
+    providers: [CookieService, Router],
 })
 export class AppComponent implements OnInit {
     constructor(
@@ -22,18 +23,21 @@ export class AppComponent implements OnInit {
         const token = this.cookieService.check("access_token");
 
         if (token) {
-            // TODO: Получить путь, добавить его в куки, при подключении переходить по значению их куки.
-            // this.router.events.subscribe((nav) => {
-            //     if (nav instanceof NavigationEnd) {
-            //         this.cookieService.set("path", nav.url, {
-            //             expires: new Date(
-            //                 new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
-            //             ),
-            //             sameSite: "Strict",
-            //         });
-            //     }
-            // });
-            // this.router.navigate(JSON.parse(this.cookieService.get("path")));
+            // Если в cookie есть path, то перенаправляем на него.
+            if (this.cookieService.check("path")) {
+                this.router.navigate([this.cookieService.get("path")]);
+            }
+            // Получаем значение url.
+            this.router.events.subscribe((nav) => {
+                if (nav instanceof NavigationEnd) {
+                    this.cookieService.set("path", nav.url, {
+                        expires: new Date(
+                            new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
+                        ),
+                        sameSite: "Strict",
+                    });
+                }
+            });
         }
     }
 }

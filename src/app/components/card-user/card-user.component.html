@@ -27,7 +27,6 @@
         </div>
         <div class="card__name">
             <p>{{ userData.name }} {{ userData.lastname }}</p>
-            <!--TODO: Сделать после нажатия создание комнаты для чата или переход по id комнаты-->
             <button
                 (click)="createOrGetChat(userData.id.toString())"
                 [routerLink]="['/chats', userData.id]"

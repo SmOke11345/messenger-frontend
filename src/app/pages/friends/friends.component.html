@@ -47,7 +47,6 @@
             <div *ngIf="!loading" class="friends__grid">
                 <card-user
                     *ngFor="let userData of friendsData"
-                    [enableButton]="enableButton"
                     [userData]="userData">
                 </card-user>
             </div>

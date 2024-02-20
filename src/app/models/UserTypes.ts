@@ -2,9 +2,9 @@ export type User = {
     id: number;
     name: string;
     login: string;
-    lastname?: string;
+    lastname: string;
     password: string;
-    profile_img?: string;
+    profile_img: string;
 };
 
 type Cookie = {

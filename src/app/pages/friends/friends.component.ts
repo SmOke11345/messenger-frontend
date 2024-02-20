@@ -24,14 +24,16 @@ import { FormsModule } from "@angular/forms";
 })
 export class FriendsComponent implements OnInit {
     friendsData: User[] = [];
-    enableButton: boolean = false;
     showSearch: boolean = true;
     loading: boolean;
 
     errors: string[] = [];
     value: string = "";
 
-    constructor(private usersService: UsersService, private router: Router) {
+    constructor(
+        private usersService: UsersService,
+        private router: Router,
+    ) {
         this.loading = true;
     }
 

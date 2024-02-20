@@ -3,20 +3,20 @@ import { Router, RouterOutlet } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 
 import { NavComponent } from "../../components/nav/nav.component";
-import { CardChatComponent } from "../../components/card-chat/card-chat.component";
 import { ChatsService } from "../../service/chats.service";
-import { chatType } from "../../models/chatsTypes";
+import { ChatType } from "../../models/chatsTypes";
+import { CardUserComponent } from "../../components/card-user/card-user.component";
 
 @Component({
     selector: "messenger-chats",
     standalone: true,
     templateUrl: "./messages.component.html",
     styleUrls: ["./messages.component.scss"],
-    imports: [RouterOutlet, NgIf, NavComponent, NgForOf, CardChatComponent],
+    imports: [RouterOutlet, NgIf, NavComponent, NgForOf, CardUserComponent],
     providers: [ChatsService],
 })
 export class MessagesComponent implements OnInit {
-    chatsData: chatType[] = [];
+    chatsData: ChatType[] = [];
 
     constructor(
         private chatsService: ChatsService,

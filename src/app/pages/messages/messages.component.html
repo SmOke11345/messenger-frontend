@@ -4,7 +4,11 @@
             <h2>Chats</h2>
         </div>
         <div class="chat-grid">
-            <app-card-chat [chatData]="chatsData"></app-card-chat>
+            <card-user
+                *ngFor="let chatData of chatsData"
+                [userData]="chatData.user"
+                [lastMessage]="chatData.lastMessage"
+                [isChatCard]="true"></card-user>
         </div>
     </div>
 </div>

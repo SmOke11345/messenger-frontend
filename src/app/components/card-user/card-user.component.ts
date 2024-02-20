@@ -7,6 +7,8 @@ import { RouterLink } from "@angular/router";
 import { SocketService } from "../../service/socket.service";
 import { ChatsService } from "../../service/chats.service";
 
+// TODO: Узнать почему сервер не хочет возвращать актуальные данные динамически без перезагрузки страницы, а лишь с перезагрузкой.
+
 @Component({
     selector: "card-user",
     standalone: true,
@@ -16,8 +18,11 @@ import { ChatsService } from "../../service/chats.service";
     styleUrl: "./card-user.component.scss",
 })
 export class CardUserComponent {
-    @Input() userData: User;
-    @Input() enableButton: boolean;
+    @Input() userData: any;
+    @Input() enableButton: boolean = false;
+
+    @Input() lastMessage: any;
+    @Input() isChatCard: boolean = false;
 
     friends: User[] = [];
     disable: boolean = false;
@@ -26,10 +31,7 @@ export class CardUserComponent {
         private usersService: UsersService,
         private chatsService: ChatsService,
         private socketService: SocketService,
-    ) {
-        this.userData = {} as User;
-        this.enableButton = true || false;
-    }
+    ) {}
 
     /**
      * Добавление в друзья

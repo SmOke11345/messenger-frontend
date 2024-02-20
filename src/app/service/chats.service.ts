@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { UrlEnums } from "../models/Enums/UrlEnums";
 import { MessagesType, SendMessageType } from "../models/messagesTypes";
-import { chatType } from "../models/chatsTypes";
+import { ChatType } from "../models/chatsTypes";
 
 @Injectable({
     providedIn: "root",
@@ -49,6 +49,6 @@ export class ChatsService {
      * Получение всех чатов.
      */
     getAllChats() {
-        return this.http.get<chatType[]>(`${UrlEnums.URL_CHATS}/get-all-chats`);
+        return this.http.get<ChatType[]>(`${UrlEnums.URL_CHATS}/get-all-chats`);
     }
 }

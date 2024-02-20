@@ -1,11 +1,9 @@
-export type chatType = {
-    members: {
-        userId: number;
-        user: {
-            name: string;
-            lastname: string;
-            profile_img: string;
-        };
+export type ChatType = {
+    user: {
+        id: number;
+        name: string;
+        lastname: string;
+        profile_img: string;
     };
     lastMessage: {
         senderId: number;

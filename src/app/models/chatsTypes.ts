@@ -1,13 +1,17 @@
 export type ChatType = {
-    user: {
-        id: number;
-        name: string;
-        lastname: string;
-        profile_img: string;
-    };
-    lastMessage: {
-        senderId: number;
-        createdAt: Date;
-        content: string;
-    };
+    user: ChatUserType;
+    lastMessage: ChatLastMessageType;
+};
+
+export type ChatUserType = {
+    id: number;
+    name: string;
+    lastname: string;
+    profile_img: string;
+};
+
+export type ChatLastMessageType = {
+    senderId: number;
+    createdAt: Date;
+    content: string;
 };

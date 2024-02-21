@@ -1,6 +1,6 @@
 export type MessagesType = {
     content: string;
-    senderId: string;
+    senderId: number;
     createdAt: string;
     updatedAt: string;
 };

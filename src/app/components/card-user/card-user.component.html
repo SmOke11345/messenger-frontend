@@ -35,9 +35,14 @@
                     Write message
                 </button>
             </span>
-            <p *ngIf="lastMessage">
-                {{ lastMessage.content }}
-            </p>
+            <span *ngIf="isChatCard">
+                <p>
+                    <span *ngIf="lastMessage.senderId !== userData.id"
+                        >Вы:
+                    </span>
+                    {{ lastMessage.content }}
+                </p>
+            </span>
         </div>
     </div>
     <!--TODO: Сделать отображение статуса активности, "онлайн не онлайн и т.п."-->
@@ -86,6 +91,6 @@
         </div>
     </span>
     <div *ngIf="isChatCard && lastMessage">
-        <p>{{ lastMessage.createdAt | date: "dd:MM" }}</p>
+        <p>{{ lastMessage.createdAt | date: "dd.MM" }}</p>
     </div>
 </div>

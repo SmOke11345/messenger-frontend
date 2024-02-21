@@ -40,15 +40,15 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.chatsService
             .createOrGetChat(this.id)
             .subscribe((data: { id: string }) => {
-                this.chatsService
-                    .getMessages(data.id.toString())
-                    .subscribe((data: MessagesType[]) => {
-                        this.messages.push(...data);
-                    });
                 this.socketService
                     .getMessages(data.id.toString())
                     .subscribe((data: MessagesType) => {
                         this.messages.push(data);
+                    });
+                this.chatsService
+                    .getMessages(data.id.toString())
+                    .subscribe((data: MessagesType[]) => {
+                        this.messages.push(...data);
                     });
             });
     }
@@ -65,7 +65,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
      * Отключение от сокета и роута при переходе на другую страницу.
      */
     ngOnDestroy() {
-        this.socketService.disconnect();
         this.SubRouter.unsubscribe();
     }
 
@@ -80,13 +79,15 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     .sendMessage(this.content, data.id.toString())
                     // TODO: Обрабатывать ошибки.
                     .subscribe();
-                if (!this.content) return; // Если поле сообщение пустое.
+                if (!this.content) return; // Если поле 'content' пустое.
                 this.socketService.sendMessage(
                     this.content,
                     data.id.toString(),
                 );
             });
 
-        this.content = "";
+        setTimeout(() => {
+            this.content = "";
+        }, 300);
     }
 }

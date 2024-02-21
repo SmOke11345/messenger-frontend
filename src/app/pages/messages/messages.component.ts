@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, RouterOutlet } from "@angular/router";
+import { RouterOutlet } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 
 import { NavComponent } from "../../components/nav/nav.component";
@@ -20,7 +20,7 @@ export class MessagesComponent implements OnInit {
 
     constructor(
         private chatsService: ChatsService,
-        private router: Router,
+        // private router: Router,
     ) {}
 
     ngOnInit() {

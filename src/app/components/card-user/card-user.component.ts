@@ -6,8 +6,7 @@ import { UsersService } from "../../service/users.service";
 import { RouterLink } from "@angular/router";
 import { SocketService } from "../../service/socket.service";
 import { ChatsService } from "../../service/chats.service";
-
-// TODO: Узнать почему сервер не хочет возвращать актуальные данные динамически без перезагрузки страницы, а лишь с перезагрузкой.
+import { ChatLastMessageType, ChatUserType } from "../../models/chatsTypes";
 
 @Component({
     selector: "card-user",
@@ -18,20 +17,22 @@ import { ChatsService } from "../../service/chats.service";
     styleUrl: "./card-user.component.scss",
 })
 export class CardUserComponent {
-    @Input() userData: any;
-    @Input() enableButton: boolean = false;
-
-    @Input() lastMessage: any;
-    @Input() isChatCard: boolean = false;
-
+    @Input() userData: ChatUserType;
+    @Input() lastMessage: ChatLastMessageType;
     friends: User[] = [];
+
+    @Input() enableButton: boolean = false;
+    @Input() isChatCard: boolean = false;
     disable: boolean = false;
 
     constructor(
         private usersService: UsersService,
         private chatsService: ChatsService,
         private socketService: SocketService,
-    ) {}
+    ) {
+        this.userData = {} as ChatUserType;
+        this.lastMessage = {} as ChatLastMessageType;
+    }
 
     /**
      * Добавление в друзья
@@ -59,6 +60,7 @@ export class CardUserComponent {
      */
     createOrGetChat(friendId?: string) {
         this.chatsService.createOrGetChat(friendId).subscribe((data: any) => {
+            this.socketService.connect();
             this.socketService.joinChat(data.id);
         });
     }

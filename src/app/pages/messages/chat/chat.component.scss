@@ -2,8 +2,16 @@
 
 .chat {
     // TODO: Пока что так.
-    margin: 50px 0 135px 0;
+    margin-bottom: 65px;
     //overflow-y: scroll;
+    .wrap {
+        position: fixed;
+        background-color: $white-clear;
+        width: 100%;
+        left: 0;
+        top: 0;
+        padding: 10px 20px;
+    }
 }
 
 .message.message-friend {
@@ -32,7 +40,7 @@
 
 .send-message {
     position: fixed;
-    bottom: 70px;
+    bottom: 10px;
     left: 0;
     right: 0;
     margin: 0 10px;
@@ -52,10 +60,11 @@
     }
 
     &__btn {
-        background-color: #ffffff;
+        background-color: $white-clear;
         padding: 10px 10px 10px 15px;
         border-radius: 0 10px 10px 0;
         border: 2px solid $white;
         border-left: none;
+        display: flex;
     }
 }

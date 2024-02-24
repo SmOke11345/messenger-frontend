@@ -24,9 +24,10 @@ export class MessagesComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.chatsService.getAllChats().subscribe((data) => {
-            this.chatsData = data;
-            console.log(this.chatsData);
-        });
+        setTimeout(() => {
+            this.chatsService.getAllChats().subscribe((data) => {
+                this.chatsData = data;
+            });
+        }, 300);
     }
 }

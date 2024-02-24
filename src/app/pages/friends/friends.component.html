@@ -1,22 +1,24 @@
 <section class="section friends">
     <div class="container">
-        <div class="wrapper">
-            <div class="title">
-                <h2>Friends</h2>
+        <header class="header">
+            <div class="wrapper">
+                <div class="title">
+                    <h2>Friends</h2>
+                </div>
+                <button class="add" routerLink="/friends/find-friends">
+                    <svg
+                        fill="none"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        width="14"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M8 8V14H6V8H0V6H6V0H8V6H14V8H8Z"
+                            fill="#0F1828" />
+                    </svg>
+                </button>
             </div>
-            <button class="add" routerLink="/friends/find-friends">
-                <svg
-                    fill="none"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 8V14H6V8H0V6H6V0H8V6H14V8H8Z" fill="#0F1828" />
-                </svg>
-            </button>
-        </div>
-        <div class="friends__grid">
-            <div *ngIf="showSearch" class="friends__search">
+            <div *ngIf="showSearch" class="search">
                 <label (click)="getSearchFriends(value)" for="search">
                     <svg
                         fill="#adb5bd"
@@ -38,6 +40,8 @@
                     placeholder="Search"
                     type="text" />
             </div>
+        </header>
+        <div class="friends__grid">
             <div *ngIf="errors">
                 <span *ngFor="let error of errors" class="error">
                     {{ error }}

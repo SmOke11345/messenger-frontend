@@ -1,24 +1,24 @@
 <section class="section find-friends">
     <div class="container">
-        <div class="wrapper">
-            <button class="prev" routerLink="/friends">
-                <svg
-                    fill="none"
-                    height="12"
-                    viewBox="0 0 8 12"
-                    width="8"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M0.287994 5.99999L6.29799 12.01L7.71199 10.596L3.11199 5.99599L7.71199 1.39599L6.29799 -0.0100098L0.287994 5.99999Z"
-                        fill="#0F1828" />
-                </svg>
-            </button>
-            <div class="title">
-                <h2>Search Friends</h2>
+        <header class="header">
+            <div class="wrapper">
+                <button class="prev" routerLink="/friends">
+                    <svg
+                        fill="none"
+                        height="12"
+                        viewBox="0 0 8 12"
+                        width="8"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M0.287994 5.99999L6.29799 12.01L7.71199 10.596L3.11199 5.99599L7.71199 1.39599L6.29799 -0.0100098L0.287994 5.99999Z"
+                            fill="#0F1828" />
+                    </svg>
+                </button>
+                <div class="title">
+                    <h2>Search Friends</h2>
+                </div>
             </div>
-        </div>
-        <div *ngIf="usersData" class="friends__grid">
-            <div class="friends__search">
+            <div class="search">
                 <label (click)="getSearchUsers()" for="search">
                     <svg
                         fill="#adb5bd"
@@ -40,6 +40,8 @@
                     placeholder="Search"
                     type="text" />
             </div>
+        </header>
+        <div *ngIf="usersData" class="friends__grid">
             <div *ngIf="errors">
                 <span *ngFor="let error of errors" class="error">
                     {{ error }}

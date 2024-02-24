@@ -10,6 +10,7 @@ import { UsersService } from "./service/users.service";
 import { AuthService } from "./service/auth.service";
 import { AuthGuard } from "./guards/auth.guard";
 import { PathEnum } from "./models/Enums/PathEnum";
+import { MessagesComponent } from "./pages/messages/messages.component";
 
 export const routes: Routes = [
     {
@@ -47,11 +48,7 @@ export const routes: Routes = [
                 path: PathEnum.PATH_CHATS,
                 // Изменение title страницы
                 title: "Chats",
-                // Чтобы страница не загружалась сразу
-                loadComponent: () =>
-                    import("./pages/messages/messages.component").then(
-                        (m) => m.MessagesComponent,
-                    ),
+                component: MessagesComponent,
             },
             {
                 path: `${PathEnum.PATH_CHATS}/:id`,

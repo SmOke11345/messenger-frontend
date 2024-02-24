@@ -5,7 +5,7 @@ import { UrlEnums } from "../models/Enums/UrlEnums";
 import { User } from "../models/UserTypes";
 import { CookieService } from "ngx-cookie-service";
 
-import { catchError, throwError } from "rxjs";
+import { catchError, retry, throwError } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class UsersService {
@@ -22,9 +22,9 @@ export class UsersService {
      * Получение всех пользователей
      */
     getAllUsers() {
-        return this.http.get<User[]>(
-            `${UrlEnums.URL_USERS}?id=${this.user_id}`,
-        );
+        return this.http
+            .get<User[]>(`${UrlEnums.URL_USERS}?id=${this.user_id}`)
+            .pipe(retry(4));
     }
 
     /**
@@ -38,6 +38,7 @@ export class UsersService {
                 catchError((error) => {
                     return throwError(error);
                 }),
+                retry(4),
             );
     }
 

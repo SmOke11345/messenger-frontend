@@ -1,5 +1,24 @@
 <section class="chat">
     <div class="container">
+        <div class="wrap">
+            <div class="wrapper">
+                <button class="prev" routerLink="/chats">
+                    <svg
+                        fill="none"
+                        height="12"
+                        viewBox="0 0 8 12"
+                        width="8"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M0.287994 5.99999L6.29799 12.01L7.71199 10.596L3.11199 5.99599L7.71199 1.39599L6.29799 -0.0100098L0.287994 5.99999Z"
+                            fill="#0F1828" />
+                    </svg>
+                </button>
+                <div class="title">
+                    <h2>{{ membersData.name }} {{ membersData.lastname }}</h2>
+                </div>
+            </div>
+        </div>
         <div class="chat-grid">
             <div
                 *ngFor="let message of messages"

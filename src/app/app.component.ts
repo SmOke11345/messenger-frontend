@@ -30,11 +30,13 @@ export class AppComponent implements OnInit {
             // Получаем значение url.
             this.router.events.subscribe((nav) => {
                 if (nav instanceof NavigationEnd) {
+                    if (nav.url.includes("chats/")) return;
                     this.cookieService.set("path", nav.url, {
                         expires: new Date(
                             new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
                         ),
                         sameSite: "Strict",
+                        path: "/",
                     });
                 }
             });

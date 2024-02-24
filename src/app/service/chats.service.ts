@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { UrlEnums } from "../models/Enums/UrlEnums";
 import { MessagesType, SendMessageType } from "../models/messagesTypes";
 import { ChatType } from "../models/chatsTypes";
+import { retry } from "rxjs";
 
 @Injectable({
     providedIn: "root",
@@ -30,9 +31,9 @@ export class ChatsService {
      * @param chatId
      */
     getMessages(chatId: string) {
-        return this.http.get<MessagesType[]>(
-            `${UrlEnums.URL_CHATS}/get-messages/${chatId}`,
-        );
+        return this.http
+            .get<MessagesType[]>(`${UrlEnums.URL_CHATS}/get-messages/${chatId}`)
+            .pipe(retry(4));
     }
 
     /**
@@ -49,6 +50,10 @@ export class ChatsService {
      * Получение всех чатов.
      */
     getAllChats() {
-        return this.http.get<ChatType[]>(`${UrlEnums.URL_CHATS}/get-all-chats`);
+        return this.http
+            .get<ChatType[]>(`${UrlEnums.URL_CHATS}/get-all-chats`)
+            .pipe(retry(4));
     }
+
+    // TODO: Сделать удаление и изменения сообщения.
 }

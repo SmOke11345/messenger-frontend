@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, Observer } from "rxjs";
+import { Observable, Observer, retry } from "rxjs";
 import { io } from "socket.io-client";
 import { CookieService } from "ngx-cookie-service";
 import { MessagesType } from "../models/messagesTypes";
@@ -44,7 +44,7 @@ export class SocketService {
             this.socket.on("onMessage", (data: MessagesType) => {
                 observer.next(data);
             });
-        });
+        }).pipe(retry(4));
     }
 
     /**

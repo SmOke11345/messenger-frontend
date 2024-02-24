@@ -1,14 +1,16 @@
-<div class="section chats">
+<section class="chats">
     <div class="container">
-        <div class="title">
-            <h2>Chats</h2>
-        </div>
+        <header class="header">
+            <div class="title">
+                <h2>Chats</h2>
+            </div>
+        </header>
         <div class="chat-grid">
             <card-user
                 *ngFor="let chatData of chatsData"
-                [userData]="chatData.user"
+                [isChatCard]="true"
                 [lastMessage]="chatData.lastMessage"
-                [isChatCard]="true"></card-user>
+                [userData]="chatData.user"></card-user>
         </div>
     </div>
-</div>
+</section>

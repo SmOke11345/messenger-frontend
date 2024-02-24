@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
 import { DatePipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { SocketService } from "../../../service/socket.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ChatsService } from "../../../service/chats.service";
 import { MessagesType } from "../../../models/messagesTypes";
@@ -9,9 +9,9 @@ import { CookieService } from "ngx-cookie-service";
 import { FormsModule } from "@angular/forms";
 
 @Component({
-    selector: "app-chat",
+    selector: "chat",
     standalone: true,
-    imports: [NgForOf, DatePipe, NgIf, NgClass, FormsModule],
+    imports: [NgForOf, DatePipe, NgIf, NgClass, FormsModule, RouterLink],
     providers: [SocketService, ChatsService, CookieService],
     templateUrl: "./chat.component.html",
     styleUrl: "./chat.component.scss",
@@ -19,8 +19,15 @@ import { FormsModule } from "@angular/forms";
 export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     messages: MessagesType[] = [];
     id: string = "";
-    userId = JSON.parse(this.cookieService.get("user_data")).id;
     content: string = "";
+    membersData: {
+        id: number;
+        name: string;
+        lastname: string;
+        profile_img: string;
+    };
+
+    userId = JSON.parse(this.cookieService.get("user_data")).id;
 
     private SubRouter: Subscription;
 
@@ -30,6 +37,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         private router: ActivatedRoute,
         private cookieService: CookieService,
     ) {
+        this.membersData = {} as {
+            id: number;
+            name: string;
+            lastname: string;
+            profile_img: string;
+        };
         // Получение id из роута.
         this.SubRouter = this.router.params.subscribe((params) => {
             this.id = params["id"];
@@ -48,7 +61,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.chatsService
                     .getMessages(data.id.toString())
                     .subscribe((data: MessagesType[]) => {
-                        this.messages.push(...data);
+                        this.membersData = data[0].user;
+                        this.messages.push(...data.slice(1));
                     });
             });
     }

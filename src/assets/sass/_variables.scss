@@ -3,13 +3,14 @@ $font-p: 14px;
 
 $primary-color: #002de3;
 $text-color: #0f1828;
+$white-clear: #ffffff;
 $white: #f7f7fc;
 $red: #ff0000;
 $green: #008000ff;
 $grey: #ededed;
 
 %wrapper {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

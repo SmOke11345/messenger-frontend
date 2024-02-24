@@ -7,12 +7,16 @@
     margin: 0 auto;
 }
 
-.wrapper {
-    @extend %wrapper;
+.friends,
+.find-friends,
+.settings {
+    .container {
+        margin: 120px auto 100px;
+    }
 }
 
-.section {
-    margin: 20px 0 100px;
+.wrapper {
+    @extend %wrapper;
 }
 
 .form {
@@ -126,19 +130,16 @@
     background-color: $green;
 }
 
-.find-friends,
-.friends,
-.profile {
-    .wrapper {
-        align-items: baseline;
-        margin-bottom: 15px;
-    }
-}
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px 20px 0;
+    background-color: $white-clear;
 
-.settings,
-.chats {
-    .title {
-        margin-bottom: 20px;
+    .wrapper {
+        margin-bottom: 10px;
     }
 }
 
@@ -149,7 +150,8 @@
 }
 
 .find-friends .wrapper,
-.profile .wrapper {
+.profile .wrapper,
+.chat .wrapper {
     justify-content: normal;
 }
 
@@ -158,37 +160,35 @@ button.prev {
     margin-right: 10px;
 }
 
-.friends {
-    &__grid {
-        display: grid;
-        gap: 16px;
+.friends__grid {
+    display: grid;
+    gap: 16px;
+}
+
+.search {
+    position: relative;
+    margin-bottom: 10px;
+
+    label[for="search"] {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 6px;
+        left: 8px;
+        cursor: pointer;
     }
 
-    &__search {
-        position: relative;
-        margin-bottom: 10px;
+    input[type="text"] {
+        width: 100%;
+        padding: 10px 8px 10px 40px;
+        background-color: $white;
+        border: none;
+        border-radius: 4px;
 
-        label[for="search"] {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            top: 6px;
-            left: 8px;
-            cursor: pointer;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 10px 8px 10px 40px;
-            background-color: $white;
-            border: none;
-            border-radius: 4px;
-
-            &::placeholder {
-                font-size: $font-p;
-                font-family: "Archivo", sans-serif;
-                color: #adb5bd;
-            }
+        &::placeholder {
+            font-size: $font-p;
+            font-family: "Archivo", sans-serif;
+            color: #adb5bd;
         }
     }
 }
@@ -196,4 +196,5 @@ button.prev {
 .chat-grid {
     display: grid;
     row-gap: 10px;
+    margin-top: 65px;
 }

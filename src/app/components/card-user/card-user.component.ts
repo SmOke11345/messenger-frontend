@@ -64,4 +64,15 @@ export class CardUserComponent {
             this.socketService.joinChat(data.id);
         });
     }
+
+    /**
+     * Не полное отображение сообщения в карточке.
+     */
+    prepareLastMessage() {
+        if (this.lastMessage.content.length < 11) {
+            return this.lastMessage.content;
+        }
+        return (this.lastMessage.content =
+            this.lastMessage.content.slice(0, 11) + "...");
+    }
 }

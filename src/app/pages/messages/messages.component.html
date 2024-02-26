@@ -5,7 +5,8 @@
                 <h2>Chats</h2>
             </div>
         </header>
-        <div class="chat-grid">
+        <div *ngIf="loading">Loading...🐼</div>
+        <div *ngIf="!loading" class="chat-grid">
             <card-user
                 *ngFor="let chatData of chatsData"
                 [isChatCard]="true"

@@ -41,19 +41,17 @@
                     type="text" />
             </div>
         </header>
-        <div class="friends__grid">
-            <div *ngIf="errors">
-                <span *ngFor="let error of errors" class="error">
-                    {{ error }}
-                </span>
-            </div>
-            <div *ngIf="loading">Loading...🐼</div>
-            <div *ngIf="!loading" class="friends__grid">
-                <card-user
-                    *ngFor="let userData of friendsData"
-                    [userData]="userData">
-                </card-user>
-            </div>
+        <div *ngIf="errors">
+            <span *ngFor="let error of errors" class="error">
+                {{ error }}
+            </span>
+        </div>
+        <div *ngIf="loading">Loading...🐼</div>
+        <div *ngIf="!loading" class="friends__grid">
+            <card-user
+                *ngFor="let userData of friendsData"
+                [userData]="userData">
+            </card-user>
         </div>
     </div>
 </section>

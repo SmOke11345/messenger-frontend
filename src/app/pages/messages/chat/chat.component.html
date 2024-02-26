@@ -21,19 +21,51 @@
         </div>
         <div class="chat-grid">
             <div
+                (click)="selectMessages(message.id)"
                 *ngFor="let message of messages"
                 [ngClass]="{
-                    'message-friend': message.senderId !== userId
+                    'message-friend': message.senderId !== userId,
+                    selected: selectedMessages.includes(message.id)
                 }"
                 class="message">
-                <div class="message__item">
-                    <p>
-                        {{ message.content }}
-                    </p>
+                <div class="message--wrap">
+                    <div class="message__item">
+                        <p>
+                            {{ message.content }}
+                        </p>
+                    </div>
+                    <div class="message__time">
+                        {{ message.createdAt | date: "HH:mm" }}
+                    </div>
                 </div>
-                <div class="message__time">
-                    {{ message.createdAt | date: "HH:mm" }}
-                </div>
+            </div>
+        </div>
+        <!-- TODO: Теряется возможность выбора сообщений сразу после отправления сообщения в socket, т.к сообщение еще не отправлено в бд -->
+        <div *ngIf="selectedMessages.length" class="buttons-selected error">
+            <div (click)="deleteMessages()">
+                <svg
+                    fill="none"
+                    height="18"
+                    viewBox="0 0 14 18"
+                    width="14"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1 16C1 16.5304 1.21071 17.0391 1.58579 17.4142C1.96086 17.7893 2.46957 18 3 18H11C11.5304 18 12.0391 17.7893 12.4142 17.4142C12.7893 17.0391 13 16.5304 13 16V4H1V16ZM3 6H11V16H3V6ZM10.5 1L9.5 0H4.5L3.5 1H0V3H14V1H10.5Z"
+                        fill="white" />
+                </svg>
+            </div>
+            <!--  TODO:Сделать редактирование сообщения-->
+            <div>
+                <svg
+                    fill="none"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11.06 6L12 6.94L2.92 16H2V15.08L11.06 6ZM14.66 0C14.41 0 14.15 0.1 13.96 0.29L12.13 2.12L15.88 5.87L17.71 4.04C18.1 3.65 18.1 3 17.71 2.63L15.37 0.29C15.17 0.09 14.92 0 14.66 0ZM11.06 3.19L0 14.25V18H3.75L14.81 6.94L11.06 3.19Z"
+                        fill="white" />
+                </svg>
             </div>
         </div>
         <div class="send-message">

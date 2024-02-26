@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
         request: HttpRequest<any>,
         next: HttpHandler,
     ): Observable<HttpEvent<any>> {
-        console.log("Intercepted request:", request);
+        // console.log("Intercepted request:", request);
 
         // Получаем токен из cookie
         const token = this.cookieService.get("access_token");

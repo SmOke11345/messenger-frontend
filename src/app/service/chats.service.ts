@@ -33,7 +33,7 @@ export class ChatsService {
     getMessages(chatId: string) {
         return this.http
             .get<MessagesType[]>(`${UrlEnums.URL_CHATS}/get-messages/${chatId}`)
-            .pipe(retry(4));
+            .pipe(retry(2));
     }
 
     /**
@@ -52,8 +52,22 @@ export class ChatsService {
     getAllChats() {
         return this.http
             .get<ChatType[]>(`${UrlEnums.URL_CHATS}/get-all-chats`)
-            .pipe(retry(4));
+            .pipe(retry(2));
     }
 
-    // TODO: Сделать удаление и изменения сообщения.
+    /**
+     * Удаление сообщений.
+     * @param chatId
+     * @param messages
+     */
+    deleteMessages(chatId: string, messages: number[]) {
+        return this.http.delete(`${UrlEnums.URL_CHATS}/delete-messages`, {
+            body: {
+                chatId,
+                messages,
+            },
+        });
+    }
+
+    // TODO: Сделать изменение сообщения.
 }

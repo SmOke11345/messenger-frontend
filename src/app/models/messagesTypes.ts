@@ -5,6 +5,7 @@ export type MessagesType = {
         lastname: string;
         profile_img: string;
     };
+    id: number;
     content: string;
     senderId: number;
     createdAt: string;

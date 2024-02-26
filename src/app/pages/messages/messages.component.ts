@@ -18,16 +18,23 @@ import { CardUserComponent } from "../../components/card-user/card-user.componen
 export class MessagesComponent implements OnInit {
     chatsData: ChatType[] = [];
 
-    constructor(
-        private chatsService: ChatsService,
-        // private router: Router,
-    ) {}
+    loading: boolean;
+
+    constructor(private chatsService: ChatsService) {
+        this.loading = true;
+    }
 
     ngOnInit() {
-        setTimeout(() => {
-            this.chatsService.getAllChats().subscribe((data) => {
+        this.chatsService.getAllChats().subscribe({
+            next: (data) => {
                 this.chatsData = data;
-            });
-        }, 300);
+            },
+            error: (error) => {
+                console.log(error);
+            },
+            complete: () => {
+                setTimeout(() => (this.loading = false), 400);
+            },
+        });
     }
 }

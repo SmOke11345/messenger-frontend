@@ -24,11 +24,12 @@ import { FormsModule } from "@angular/forms";
 })
 export class FriendsComponent implements OnInit {
     friendsData: User[] = [];
-    showSearch: boolean = true;
-    loading: boolean;
-
     errors: string[] = [];
     value: string = "";
+
+    showSearch: boolean = true;
+
+    loading: boolean;
 
     constructor(
         private usersService: UsersService,
@@ -43,11 +44,11 @@ export class FriendsComponent implements OnInit {
     ngOnInit() {
         this.usersService.getFriends().subscribe({
             next: (data) => {
-                // TODO: Сделать чтобы, если массив пуст, то не показывалась строка поиска, а если нет то, показывалась.
-                this.showSearch = data.length !== 0;
                 this.friendsData = data;
             },
             error: (error) => {
+                this.loading = false;
+                this.showSearch = false;
                 this.errors = [`${error.error.message}`];
             },
             complete: () => {

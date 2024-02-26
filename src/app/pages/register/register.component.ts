@@ -31,13 +31,13 @@ import { UsersService } from "../../service/users.service";
 export class RegisterComponent {
     imgAcc: string = ""; // Используется только для вывода изображений
     errors: string[] = [];
+
     inputType: string = "password";
+    show: boolean = false;
 
     form: FormGroup;
     // @ts-ignore
     selectedFile: File;
-
-    show: boolean = false;
 
     constructor(
         private authService: AuthService,
@@ -52,7 +52,7 @@ export class RegisterComponent {
                 Validators.required,
                 Validators.minLength(6),
             ]),
-            profile_img: new FormControl(" "),
+            profile_img: new FormControl(""),
         });
     }
 

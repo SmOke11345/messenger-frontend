@@ -8,6 +8,13 @@ import { MessagesType } from "../../../models/messagesTypes";
 import { CookieService } from "ngx-cookie-service";
 import { FormsModule } from "@angular/forms";
 
+type membersType = {
+    id: number;
+    name: string;
+    lastname: string;
+    profile_img: string;
+};
+
 @Component({
     selector: "chat",
     standalone: true,
@@ -18,17 +25,15 @@ import { FormsModule } from "@angular/forms";
 })
 export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     messages: MessagesType[] = [];
+    selectedMessages: number[] = [];
+
     id: string = "";
     content: string = "";
-    membersData: {
-        id: number;
-        name: string;
-        lastname: string;
-        profile_img: string;
-    };
 
     userId = JSON.parse(this.cookieService.get("user_data")).id;
+    // isSelected: boolean = false;
 
+    membersData: membersType;
     private SubRouter: Subscription;
 
     constructor(
@@ -37,12 +42,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         private router: ActivatedRoute,
         private cookieService: CookieService,
     ) {
-        this.membersData = {} as {
-            id: number;
-            name: string;
-            lastname: string;
-            profile_img: string;
-        };
+        this.membersData = {} as membersType;
         // Получение id из роута.
         this.SubRouter = this.router.params.subscribe((params) => {
             this.id = params["id"];
@@ -103,5 +103,30 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(() => {
             this.content = "";
         }, 300);
+    }
+
+    /**
+     * Выбор сообщений.
+     * @param messageId
+     */
+    selectMessages(messageId: number) {
+        if (this.selectedMessages.includes(messageId)) {
+            this.selectedMessages = this.selectedMessages.filter(
+                (id) => id !== messageId,
+            );
+        } else {
+            this.selectedMessages.push(messageId);
+        }
+    }
+
+    /**
+     * Удаление выбранных сообщений.
+     */
+    deleteMessages() {
+        this.chatsService.createOrGetChat(this.id).subscribe((data) => {
+            this.chatsService
+                .deleteMessages(data.id.toString(), this.selectedMessages)
+                .subscribe();
+        });
     }
 }

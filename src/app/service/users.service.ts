@@ -24,7 +24,7 @@ export class UsersService {
     getAllUsers() {
         return this.http
             .get<User[]>(`${UrlEnums.URL_USERS}?id=${this.user_id}`)
-            .pipe(retry(4));
+            .pipe(retry(2));
     }
 
     /**
@@ -38,7 +38,7 @@ export class UsersService {
                 catchError((error) => {
                     return throwError(error);
                 }),
-                retry(4),
+                retry(2),
             );
     }
 

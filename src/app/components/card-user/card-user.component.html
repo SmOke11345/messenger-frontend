@@ -40,14 +40,14 @@
                     <span *ngIf="lastMessage.senderId !== userData.id"
                         >Вы:
                     </span>
-                    {{ lastMessage.content }}
+                    {{ prepareLastMessage() }}
                 </p>
             </span>
         </div>
     </div>
     <!--TODO: Сделать отображение статуса активности, "онлайн не онлайн и т.п."-->
     <span *ngIf="!isChatCard">
-        <div *ngIf="enableButton">
+        <span *ngIf="enableButton">
             <button
                 (click)="addFriend(userData.id)"
                 *ngIf="!disable"
@@ -66,9 +66,9 @@
                         stroke-width="2" />
                 </svg>
             </button>
-            <div *ngIf="disable" class="green">Добавлен</div>
-        </div>
-        <div *ngIf="!enableButton">
+            <span *ngIf="disable" class="green">Добавлен</span>
+        </span>
+        <span *ngIf="!enableButton">
             <button
                 (click)="deleteFriend(userData.id)"
                 *ngIf="!disable"
@@ -87,8 +87,8 @@
                         stroke-width="2" />
                 </svg>
             </button>
-            <div *ngIf="disable" class="red">Удален</div>
-        </div>
+            <span *ngIf="disable" class="red">Удален</span>
+        </span>
     </span>
     <div *ngIf="isChatCard && lastMessage">
         <p>{{ lastMessage.createdAt | date: "dd.MM" }}</p>

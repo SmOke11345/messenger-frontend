@@ -26,12 +26,13 @@ type membersType = {
 export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     messages: MessagesType[] = [];
     selectedMessages: number[] = [];
+    statusDeleted: number[] = [];
 
     id: string = "";
     content: string = "";
 
     userId = JSON.parse(this.cookieService.get("user_data")).id;
-    // isSelected: boolean = false;
+    isUpdated: boolean = false;
 
     membersData: membersType;
     private SubRouter: Subscription;
@@ -114,6 +115,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             this.selectedMessages = this.selectedMessages.filter(
                 (id) => id !== messageId,
             );
+            this.content = "";
+            this.isUpdated = false;
         } else {
             this.selectedMessages.push(messageId);
         }
@@ -128,5 +131,48 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 .deleteMessages(data.id.toString(), this.selectedMessages)
                 .subscribe();
         });
+        this.statusDeleted = this.selectedMessages;
+        setTimeout(() => {
+            this.selectedMessages = [];
+        }, 50);
+    }
+
+    selectUpdateMessage() {
+        this.messages.map((message) => {
+            if (message.id === this.selectedMessages[0]) {
+                this.content = message.content;
+            }
+        });
+        this.isUpdated = true;
+    }
+
+    /*
+     * Изменение сообщения.
+     */
+    updateMessage() {
+        if (this.isUpdated) {
+            // Динамическое отображение данных.
+            this.messages.map((message) => {
+                if (message.id === this.selectedMessages[0]) {
+                    message.content = this.content;
+                }
+            });
+            // Отправление изменений в бд.
+            this.chatsService.createOrGetChat(this.id).subscribe((data) => {
+                this.chatsService
+                    .updateMessage(
+                        data.id.toString(),
+                        this.selectedMessages[0],
+                        this.content,
+                    )
+                    .subscribe({
+                        complete: () => {
+                            this.isUpdated = false;
+                            this.content = "";
+                            this.selectedMessages = [];
+                        },
+                    });
+            });
+        }
     }
 }

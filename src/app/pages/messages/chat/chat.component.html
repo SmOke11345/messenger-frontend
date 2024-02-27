@@ -28,7 +28,16 @@
                     selected: selectedMessages.includes(message.id)
                 }"
                 class="message">
-                <div class="message--wrap">
+                <div
+                    *ngIf="statusDeleted.includes(message.id)"
+                    class="message--wrap deleted">
+                    <div class="message__item">
+                        <p>Message deleted.</p>
+                    </div>
+                </div>
+                <div
+                    *ngIf="!statusDeleted.includes(message.id)"
+                    class="message--wrap">
                     <div class="message__item">
                         <p>
                             {{ message.content }}
@@ -41,8 +50,10 @@
             </div>
         </div>
         <!-- TODO: Теряется возможность выбора сообщений сразу после отправления сообщения в socket, т.к сообщение еще не отправлено в бд -->
-        <div *ngIf="selectedMessages.length" class="buttons-selected error">
-            <div (click)="deleteMessages()">
+        <div *ngIf="selectedMessages.length" class="buttons-selected">
+            <div
+                (click)="deleteMessages()"
+                class="buttons-selected__item error">
                 <svg
                     fill="none"
                     height="18"
@@ -53,9 +64,12 @@
                         d="M1 16C1 16.5304 1.21071 17.0391 1.58579 17.4142C1.96086 17.7893 2.46957 18 3 18H11C11.5304 18 12.0391 17.7893 12.4142 17.4142C12.7893 17.0391 13 16.5304 13 16V4H1V16ZM3 6H11V16H3V6ZM10.5 1L9.5 0H4.5L3.5 1H0V3H14V1H10.5Z"
                         fill="white" />
                 </svg>
+                <p>Delete</p>
             </div>
-            <!--  TODO:Сделать редактирование сообщения-->
-            <div>
+            <div
+                (click)="selectUpdateMessage()"
+                *ngIf="selectedMessages.length === 1"
+                class="buttons-selected__item require">
                 <svg
                     fill="none"
                     height="18"
@@ -66,6 +80,7 @@
                         d="M11.06 6L12 6.94L2.92 16H2V15.08L11.06 6ZM14.66 0C14.41 0 14.15 0.1 13.96 0.29L12.13 2.12L15.88 5.87L17.71 4.04C18.1 3.65 18.1 3 17.71 2.63L15.37 0.29C15.17 0.09 14.92 0 14.66 0ZM11.06 3.19L0 14.25V18H3.75L14.81 6.94L11.06 3.19Z"
                         fill="white" />
                 </svg>
+                <p>Edit</p>
             </div>
         </div>
         <div class="send-message">
@@ -76,7 +91,10 @@
                     class="chat-field"
                     placeholder="Write a message...🐼"
                     type="text" />
-                <button (click)="sendMessage()" class="send-message__btn">
+                <button
+                    (click)="sendMessage()"
+                    *ngIf="!isUpdated"
+                    class="send-message__btn">
                     <svg
                         fill="none"
                         height="20"
@@ -88,6 +106,22 @@
                             d="M0.0216164 3.85064C-0.268152 1.15658 2.40997 -0.821837 4.77604 0.339356L18.0875 6.8702C20.6375 8.12027 20.6375 11.8786 18.0875 13.1286L4.77604 19.6606C2.40997 20.8218 -0.267037 18.8434 0.0216164 16.1494L0.556573 11.1537H9.60402C9.8996 11.1537 10.1831 11.0321 10.3921 10.8156C10.6011 10.5991 10.7185 10.3056 10.7185 9.99942C10.7185 9.69329 10.6011 9.3997 10.3921 9.18323C10.1831 8.96677 9.8996 8.84515 9.60402 8.84515H0.557687L0.0216164 3.85064Z"
                             fill="#002DE3"
                             fill-rule="evenodd" />
+                    </svg>
+                </button>
+                <button
+                    (click)="updateMessage()"
+                    *ngIf="isUpdated"
+                    class="send-message__btn">
+                    <svg
+                        fill="none"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" fill="#002DE3" r="10" />
+                        <path
+                            d="M14.7355 6.21993C14.8037 6.1503 14.8852 6.09498 14.9751 6.05722C15.065 6.01945 15.1615 6 15.259 6C15.3565 6 15.453 6.01945 15.5429 6.05722C15.6328 6.09498 15.7142 6.1503 15.7825 6.21993C16.0685 6.50893 16.0725 6.97593 15.7925 7.26993L9.87949 14.2599C9.81236 14.3337 9.73089 14.3929 9.64007 14.4341C9.54925 14.4752 9.45099 14.4974 9.3513 14.4993C9.25161 14.5011 9.15258 14.4827 9.06028 14.4449C8.96798 14.4072 8.88435 14.3511 8.81449 14.2799L5.21649 10.6339C5.07773 10.4924 5 10.3021 5 10.1039C5 9.90574 5.07773 9.71545 5.21649 9.57393C5.28474 9.5043 5.36619 9.44898 5.45608 9.41122C5.54597 9.37345 5.64249 9.354 5.73999 9.354C5.83749 9.354 5.93401 9.37345 6.0239 9.41122C6.11379 9.44898 6.19525 9.5043 6.26349 9.57393L9.31549 12.6669L14.7155 6.24193L14.7355 6.21993Z"
+                            fill="#E5E5E5" />
                     </svg>
                 </button>
             </div>

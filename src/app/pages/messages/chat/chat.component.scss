@@ -12,6 +12,26 @@
         top: 0;
         padding: 10px 20px;
     }
+
+    .buttons-selected {
+        display: flex;
+        position: fixed;
+        bottom: 65px;
+        right: 20px;
+
+        &__item:first-child {
+            margin-right: 10px;
+        }
+
+        &__item {
+            display: flex;
+            align-items: center;
+
+            p {
+                margin-left: 10px;
+            }
+        }
+    }
 }
 
 .message.message-friend {
@@ -32,6 +52,10 @@
         border-radius: 50%;
         background-color: $primary-color;
     }
+}
+
+.message--wrap.deleted {
+    background-color: #e8bebe;
 }
 
 .message {

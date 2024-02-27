@@ -69,5 +69,19 @@ export class ChatsService {
         });
     }
 
+    /**
+     * Изменение сообщения.
+     * @param chatId
+     * @param messageId
+     * @param content
+     */
+    updateMessage(chatId: string, messageId: number, content: string) {
+        return this.http.patch(`${UrlEnums.URL_CHATS}/update-message`, {
+            chatId,
+            messageId,
+            content,
+        });
+    }
+
     // TODO: Сделать изменение сообщения.
 }

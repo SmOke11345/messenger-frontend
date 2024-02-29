@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, Observer } from "rxjs";
 import { io } from "socket.io-client";
 import { CookieService } from "ngx-cookie-service";
-import { MessagesType } from "../models/messagesTypes";
+import { MessageType } from "../models/messagesTypes";
 
 @Injectable({ providedIn: "root" })
 export class SocketService {
@@ -41,7 +41,7 @@ export class SocketService {
         return new Observable((observer: Observer<any>) => {
             this.joinChat(chatId);
 
-            this.socket.on("onMessage", (data: MessagesType) => {
+            this.socket.on("onMessage", (data: MessageType) => {
                 observer.next(data);
             });
         });

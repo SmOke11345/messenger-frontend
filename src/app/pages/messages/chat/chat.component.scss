@@ -32,6 +32,30 @@
             }
         }
     }
+
+    .date {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+
+        &::after,
+        &::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            border-radius: 20px;
+            background-color: $grey;
+        }
+
+        p {
+            text-align: center;
+            width: -moz-available;
+            width: -webkit-fill-available;
+            margin: 0 10px;
+        }
+    }
 }
 
 .message.message-friend {

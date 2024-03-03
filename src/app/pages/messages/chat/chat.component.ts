@@ -55,22 +55,59 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.chatsService
             .createOrGetChat(this.id)
             .subscribe((data: { id: string }) => {
-                this.socketService
-                    .getMessages(data.id.toString())
-                    .subscribe((data: MessageByDateType) => {
-                        this.dataMessages.push({
-                            date: "Новое сообщения",
-                            messages: [{ ...data.messages }[0]],
-                        });
-                    });
                 this.chatsService
                     .getMessages(data.id.toString())
                     .subscribe((data) => {
                         this.membersData = data[0].user;
+                        console.log(data);
                         const newData = data.slice(
                             1,
                         ) as unknown as MessageByDateType[];
                         this.dataMessages.push(...newData);
+                    });
+                this.socketService
+                    .getMessages(data.id.toString())
+                    .subscribe((data: MessageByDateType) => {
+                        const findDate = this.dataMessages.find((item) =>
+                            item.date.includes("Новое сообщения"),
+                        );
+
+                        if (findDate) {
+                            const indexMessage =
+                                this.dataMessages.indexOf(findDate);
+                            this.dataMessages[indexMessage].messages.push(
+                                data.messages[0],
+                            );
+                        } else {
+                            this.dataMessages.push({
+                                date: "Новое сообщения",
+                                messages: [data.messages[0]],
+                            });
+                        }
+                    });
+                this.socketService
+                    .getUpdateMessage(this.id.toString())
+                    .subscribe({
+                        next: (data: MessageByDateType) => {
+                            this.dataMessages.map((message) => {
+                                message.messages.map((message) => {
+                                    // TODO: Найти объект с такими же данными и изменить его значения.
+                                    // TODO: Доделать обновление сообщений при изменении. Если у одного пользователя меняется сообщение то оно обновлялось всем остальным.
+                                    console.log(data.messages[0].id);
+                                    if (
+                                        data.messages[0].id ===
+                                        this.selectedMessages[0]
+                                    ) {
+                                        console.log(message);
+                                    }
+                                });
+                            });
+                        },
+                        complete: () => {
+                            this.isUpdated = false;
+                            this.content = "";
+                            this.selectedMessages = [];
+                        },
                     });
             });
     }
@@ -97,10 +134,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.chatsService
             .createOrGetChat(this.id)
             .subscribe((data: { id: string }) => {
-                this.chatsService
-                    .sendMessage(this.content, data.id.toString())
-                    // TODO: Обрабатывать ошибки.
-                    .subscribe();
                 if (!this.content) return; // Если поле 'content' пустое.
                 this.socketService.sendMessage(
                     this.content,
@@ -122,8 +155,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isFriendMessage =
             event.currentTarget.classList.contains("message-friend");
 
-        console.log(messageId);
-
+        // Если массив уже содержит такое значение.
         if (this.selectedMessages.includes(messageId)) {
             this.selectedMessages = this.selectedMessages.filter(
                 (id) => id !== messageId,
@@ -181,19 +213,28 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             });
             // Отправление изменений в бд.
             this.chatsService.createOrGetChat(this.id).subscribe((data) => {
-                this.chatsService
-                    .updateMessage(
-                        data.id.toString(),
-                        this.selectedMessages[0],
-                        this.content,
-                    )
-                    .subscribe({
-                        complete: () => {
-                            this.isUpdated = false;
-                            this.content = "";
-                            this.selectedMessages = [];
-                        },
-                    });
+                this.socketService.updateMessage(
+                    data.id.toString(),
+                    this.selectedMessages[0],
+                    this.content,
+                );
+
+                // this.chatsService
+                //     .updateMessage(
+                //         data.id.toString(),
+                //         this.selectedMessages[0],
+                //         this.content,
+                //     )
+                //     .subscribe({
+                //         next: (data) => {
+                //             console.log(data);
+                //         },
+                //         complete: () => {
+                //             this.isUpdated = false;
+                //             this.content = "";
+                //             this.selectedMessages = [];
+                //         },
+                //     });
             });
         }
     }

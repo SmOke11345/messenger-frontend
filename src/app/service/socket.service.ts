@@ -63,4 +63,29 @@ export class SocketService {
             chatId,
         });
     }
+
+    /**
+     * Изменение сообщения.
+     * @param chatId
+     * @param messageId
+     * @param content
+     */
+    updateMessage(chatId: string, messageId: number, content: string) {
+        this.connect();
+        this.socket.emit("updateMessage", {
+            chatId,
+            messageId,
+            content,
+        });
+    }
+
+    getUpdateMessage(chatId: string) {
+        return new Observable((observer: Observer<any>) => {
+            this.joinChat(chatId);
+
+            this.socket.on("onUpdateMessage", (data: MessageType) => {
+                observer.next(data);
+            });
+        });
+    }
 }

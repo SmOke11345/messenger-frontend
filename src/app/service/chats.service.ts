@@ -11,20 +11,20 @@ import { retry } from "rxjs";
 export class ChatsService {
     constructor(private http: HttpClient) {}
 
-    /**
-     * Добавление сообщений в базу данных.
-     * @param content
-     * @param chatId
-     */
-    sendMessage(content: string, chatId: string | undefined) {
-        return this.http.post<SendMessageType>(
-            `${UrlEnums.URL_CHATS}/send-message`,
-            {
-                content,
-                chatId,
-            },
-        );
-    }
+    // /**
+    //  * Добавление сообщений в базу данных.
+    //  * @param content
+    //  * @param chatId
+    //  */
+    // sendMessage(content: string, chatId: string | undefined) {
+    //     return this.http.post<SendMessageType>(
+    //         `${UrlEnums.URL_CHATS}/send-message`,
+    //         {
+    //             content,
+    //             chatId,
+    //         },
+    //     );
+    // }
 
     /**
      * Получение сообщений.
@@ -69,19 +69,19 @@ export class ChatsService {
         });
     }
 
-    /**
-     * Изменение сообщения.
-     * @param chatId
-     * @param messageId
-     * @param content
-     */
-    updateMessage(chatId: string, messageId: number, content: string) {
-        return this.http.patch(`${UrlEnums.URL_CHATS}/update-message`, {
-            chatId,
-            messageId,
-            content,
-        });
-    }
+    // /**
+    //  * Изменение сообщения.
+    //  * @param chatId
+    //  * @param messageId
+    //  * @param content
+    //  */
+    // updateMessage(chatId: string, messageId: number, content: string) {
+    //     return this.http.patch(`${UrlEnums.URL_CHATS}/update-message`, {
+    //         chatId,
+    //         messageId,
+    //         content,
+    //     });
+    // }
 
     // TODO: Сделать изменение сообщения.
 }

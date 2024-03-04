@@ -52,7 +52,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO: Теряется возможность выбора сообщений сразу после отправления сообщения в socket, т.к сообщение еще не отправлено в бд -->
         <div *ngIf="selectedMessages.length" class="buttons-selected">
             <div
                 (click)="deleteMessages()"

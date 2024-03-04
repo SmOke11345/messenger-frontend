@@ -55,6 +55,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.chatsService
             .createOrGetChat(this.id)
             .subscribe((data: { id: string }) => {
+                // Получение сообщений из базы данных.
                 this.chatsService
                     .getMessages(data.id.toString())
                     .subscribe((data) => {
@@ -65,6 +66,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                         ) as unknown as MessageByDateType[];
                         this.dataMessages.push(...newData);
                     });
+                // Работа с сокетом для получения сообщений.
                 this.socketService
                     .getMessages(data.id.toString())
                     .subscribe((data: MessageByDateType) => {
@@ -85,29 +87,25 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                             });
                         }
                     });
+                // Работа с сокетом для получения обновленных сообщений.
                 this.socketService
-                    .getUpdateMessage(this.id.toString())
-                    .subscribe({
-                        next: (data: MessageByDateType) => {
-                            this.dataMessages.map((message) => {
-                                message.messages.map((message) => {
-                                    // TODO: Найти объект с такими же данными и изменить его значения.
-                                    // TODO: Доделать обновление сообщений при изменении. Если у одного пользователя меняется сообщение то оно обновлялось всем остальным.
-                                    console.log(data.messages[0].id);
-                                    if (
-                                        data.messages[0].id ===
-                                        this.selectedMessages[0]
-                                    ) {
-                                        console.log(message);
-                                    }
-                                });
+                    .getUpdateMessage(data.id.toString())
+                    .subscribe((data: MessageByDateType) => {
+                        const findDate = this.dataMessages.find((item) =>
+                            item.date.includes("Новое сообщения"),
+                        );
+
+                        if (findDate) {
+                            findDate.messages.map((message) => {
+                                if (message.id === data.messages[0].id) {
+                                    message.content = data.messages[0].content;
+
+                                    this.isUpdated = false;
+                                    this.content = "";
+                                    this.selectedMessages = [];
+                                }
                             });
-                        },
-                        complete: () => {
-                            this.isUpdated = false;
-                            this.content = "";
-                            this.selectedMessages = [];
-                        },
+                        }
                     });
             });
     }
@@ -165,8 +163,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
             this.selectedMessages.push(messageId);
         }
-
-        console.log(this.selectedMessages);
     }
 
     /**
@@ -185,6 +181,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         }, 50);
     }
 
+    /**
+     * Выбор сообщения для изменений.
+     */
     selectUpdateMessage() {
         this.dataMessages.map((message) => {
             message.messages.map((message) => {
@@ -195,8 +194,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.isUpdated = true;
     }
-
-    // TODO: Переделать функции чтобы они не зависели от id message, а от индекса массива и индекса объекта, в котором они расположены. Только потом происходит отправка message.id c content в бд.
 
     /*
      * Изменение сообщения.
@@ -218,23 +215,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.selectedMessages[0],
                     this.content,
                 );
-
-                // this.chatsService
-                //     .updateMessage(
-                //         data.id.toString(),
-                //         this.selectedMessages[0],
-                //         this.content,
-                //     )
-                //     .subscribe({
-                //         next: (data) => {
-                //             console.log(data);
-                //         },
-                //         complete: () => {
-                //             this.isUpdated = false;
-                //             this.content = "";
-                //             this.selectedMessages = [];
-                //         },
-                //     });
             });
         }
     }

@@ -17,12 +17,6 @@ export class SocketService {
         this.socket = io("http://localhost:3000");
     }
 
-    // disconnect() {
-    //     if (this.socket) {
-    //         this.socket.disconnect();
-    //     }
-    // }
-
     /**
      * Подключение к чату.
      * @param id
@@ -42,6 +36,20 @@ export class SocketService {
             this.joinChat(chatId);
 
             this.socket.on("onMessage", (data: MessageType) => {
+                observer.next(data);
+            });
+        });
+    }
+
+    /**
+     * Получение измененных сообщений.
+     * @param chatId
+     */
+    getUpdateMessage(chatId: string) {
+        return new Observable((observer: Observer<any>) => {
+            this.joinChat(chatId);
+
+            this.socket.on("onUpdateMessage", (data: MessageType) => {
                 observer.next(data);
             });
         });
@@ -76,16 +84,6 @@ export class SocketService {
             chatId,
             messageId,
             content,
-        });
-    }
-
-    getUpdateMessage(chatId: string) {
-        return new Observable((observer: Observer<any>) => {
-            this.joinChat(chatId);
-
-            this.socket.on("onUpdateMessage", (data: MessageType) => {
-                observer.next(data);
-            });
         });
     }
 }

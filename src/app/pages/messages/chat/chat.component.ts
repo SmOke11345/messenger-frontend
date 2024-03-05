@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
+import {
+    AfterViewInit,
+    Component,
+    DoCheck,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
 import { DatePipe, NgClass, NgForOf, NgIf } from "@angular/common";
 import { SocketService } from "../../../service/socket.service";
 import { ActivatedRoute, RouterLink } from "@angular/router";
@@ -23,7 +29,9 @@ type membersType = {
     templateUrl: "./chat.component.html",
     styleUrl: "./chat.component.scss",
 })
-export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ChatComponent
+    implements OnInit, OnDestroy, AfterViewInit, DoCheck
+{
     dataMessages: MessageByDateType[] = [];
     selectedMessages: number[] = [];
     statusDeleted: number[] = [];
@@ -34,6 +42,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     userId = JSON.parse(this.cookieService.get("user_data")).id;
     isUpdated: boolean = false;
     isFriendMessage: boolean = false;
+    isNewMessages: boolean = true;
 
     membersData: membersType;
     private SubRouter: Subscription;
@@ -60,16 +69,17 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     .getMessages(data.id.toString())
                     .subscribe((data) => {
                         this.membersData = data[0].user;
-                        console.log(data);
                         const newData = data.slice(
                             1,
                         ) as unknown as MessageByDateType[];
                         this.dataMessages.push(...newData);
                     });
+
                 // Работа с сокетом для получения сообщений.
                 this.socketService
                     .getMessages(data.id.toString())
                     .subscribe((data: MessageByDateType) => {
+                        // Только для новых сообщений
                         const findDate = this.dataMessages.find((item) =>
                             item.date.includes("Новое сообщения"),
                         );
@@ -86,14 +96,24 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                                 messages: [data.messages[0]],
                             });
                         }
+
+                        this.isNewMessages = true;
                     });
+
                 // Работа с сокетом для получения обновленных сообщений.
                 this.socketService
                     .getUpdateMessage(data.id.toString())
                     .subscribe((data: MessageByDateType) => {
-                        const findDate = this.dataMessages.find((item) =>
-                            item.date.includes("Новое сообщения"),
-                        );
+                        console.log(data.date);
+                        // Только для новых сообщений
+                        const findDate = this.dataMessages.find((item) => {
+                            // TODO: на будущее, сделать чтобы все сообщения менялись у одного и другого пользователя сразу.
+                            // return (
+                            //     item.date === "Новое сообщения" ||
+                            //     item.date === data.date
+                            // );
+                            return item.date === "Новое сообщения";
+                        });
 
                         if (findDate) {
                             findDate.messages.map((message) => {
@@ -107,7 +127,30 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                             });
                         }
                     });
+
+                // Работа с сокетом для получения удаленных сообщений.
+                this.socketService
+                    .getDeleteMessage(data.id.toString())
+                    .subscribe((data: number[]) => {
+                        const deleteMessages = data.map((message) => {
+                            return message;
+                        });
+                        this.statusDeleted.push(...deleteMessages);
+                    });
             });
+    }
+
+    /**
+     * Отслеживает изменения isNewMessages.
+     */
+    ngDoCheck() {
+        if (this.isNewMessages) {
+            // Прокрутка страницы вниз.
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 300);
+        }
+        this.isNewMessages = false;
     }
 
     // Действия происходят после получения доступа к DOM.
@@ -169,13 +212,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
      * Удаление выбранных сообщений.
      */
     deleteMessages() {
-        // TODO: Оба пользователя должны видеть удаление сообщений.
+        // Отправка текста об удалении сообщений в сокет.
         this.chatsService.createOrGetChat(this.id).subscribe((data) => {
-            this.chatsService
-                .deleteMessages(data.id.toString(), this.selectedMessages)
-                .subscribe();
+            this.socketService.deleteMessage(
+                data.id.toString(),
+                this.selectedMessages,
+            );
         });
-        this.statusDeleted = this.selectedMessages;
         setTimeout(() => {
             this.selectedMessages = [];
         }, 50);
@@ -200,7 +243,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     updateMessage() {
         if (this.isUpdated) {
-            // Динамическое отображение данных.
+            // Добавление в инпут значения выбранного сообщения.
             this.dataMessages.map((message) => {
                 message.messages.map((message) => {
                     if (message.id === this.selectedMessages[0]) {
@@ -208,7 +251,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     }
                 });
             });
-            // Отправление изменений в бд.
+            // Отправка обновленного сообщения в сокет.
             this.chatsService.createOrGetChat(this.id).subscribe((data) => {
                 this.socketService.updateMessage(
                     data.id.toString(),

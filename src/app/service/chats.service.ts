@@ -39,18 +39,4 @@ export class ChatsService {
             .get<ChatType[]>(`${UrlEnums.URL_CHATS}/get-all-chats`)
             .pipe(retry(2));
     }
-
-    /**
-     * Удаление сообщений.
-     * @param chatId
-     * @param messages
-     */
-    deleteMessages(chatId: string, messages: number[]) {
-        return this.http.delete(`${UrlEnums.URL_CHATS}/delete-messages`, {
-            body: {
-                chatId,
-                messages,
-            },
-        });
-    }
 }

@@ -42,6 +42,21 @@ export class SocketService {
     }
 
     /**
+     * Отправка сообщений.
+     * @param content
+     * @param chatId
+     */
+    sendMessage(content: string, chatId: string) {
+        this.connect();
+        const senderId = JSON.parse(this.cookieService.get("user_data")).id; // Получение id пользователя из cookie
+        this.socket.emit("newMessage", {
+            senderId,
+            content,
+            chatId,
+        });
+    }
+
+    /**
      * Получение измененных сообщений.
      * @param chatId
      */
@@ -52,23 +67,6 @@ export class SocketService {
             this.socket.on("onUpdateMessage", (data: MessageType) => {
                 observer.next(data);
             });
-        });
-    }
-
-    /**
-     * Отправка сообщений.
-     * @param content
-     * @param chatId
-     */
-    sendMessage(content: string, chatId: string) {
-        this.connect();
-
-        const senderId = JSON.parse(this.cookieService.get("user_data")).id; // Получение id пользователя из cookie
-
-        this.socket.emit("newMessage", {
-            senderId,
-            content,
-            chatId,
         });
     }
 
@@ -84,6 +82,33 @@ export class SocketService {
             chatId,
             messageId,
             content,
+        });
+    }
+
+    /**
+     * Получение id удаленных(-ого) сообщений(-я)
+     * @param chatId
+     */
+    getDeleteMessage(chatId: string) {
+        return new Observable((observer: Observer<any>) => {
+            this.joinChat(chatId);
+
+            this.socket.on("onDeleteMessage", (data: MessageType) => {
+                observer.next(data);
+            });
+        });
+    }
+
+    /**
+     * Удаление сообщений(-я).
+     * @param chatId
+     * @param messageId
+     */
+    deleteMessage(chatId: string, messageId: number[]) {
+        this.connect();
+        this.socket.emit("deleteMessage", {
+            chatId,
+            messageId,
         });
     }
 }

@@ -5,6 +5,7 @@
                 <h2>Chats</h2>
             </div>
         </header>
+        <!-- TODO: Если нет чатов выводить сообщение -->
         <div *ngIf="loading">Loading...🐼</div>
         <div *ngIf="!loading" class="chat-grid">
             <card-user

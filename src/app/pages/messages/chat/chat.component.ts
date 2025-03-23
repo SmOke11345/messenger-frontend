@@ -68,6 +68,7 @@ export class ChatComponent
                 this.chatsService
                     .getMessages(data.id.toString())
                     .subscribe((data) => {
+                        console.log(data);
                         this.membersData = data[0].user;
                         const newData = data.slice(
                             1,
